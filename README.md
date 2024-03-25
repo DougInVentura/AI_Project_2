@@ -3,6 +3,8 @@
 ### Note for Cody and David...
 Check out 'Encoder Tool.py' and 'ml_pipelines 3 test scaler in line.ipynb'.  In Encoder, imports a junk dataset (Main section after functions at bottom of file). Application presents column types and value counts so you can choose the encoding type.  For OHE, it allows you to specify the order of the values (example is education, etc.).  Check out the 'Possible To Do's below.
 
+Update from 9:00 PM Sunday, 3/24.  Check out the Streamlit app. I am deploying as a web application. I'll show you two tomorrow. MUCH nicer interface. The web framework I selected is pretty easy to use!! Talk soon.
+
 
 ### Assigned: Use classification methods and supervised leaning to model a substancial dataset (will include 'Churn' analysis). Adding: Generate tools for rapid data modeling
 
