@@ -11,10 +11,15 @@ import numpy as np
 import os
 import io
 
-st.set_page_config(layout="wide")
 
-st.write("""# 👋 Initial Processing Screen 👋
-### Project 2 ASU AI Course: Supervised Machine Learning Classification App for Preprocessing, Encoding, Model Building and Scoring
+
+st.set_page_config(
+    layout="wide",
+    page_title="👋 Initial Processing Screen 👋",
+    page_icon="👋"
+)
+
+st.write("""### Project 2 ASU AI Course: Supervised Machine Learning Classification App for Preprocessing, Encoding, Model Building and Scoring
          
 
 Select csv file. It will upload to a dataframe and be saved initially with a RAW_ suffix in the data directory.
@@ -24,7 +29,6 @@ INIT_PROCESS_file_name.csv will be used for "2 Select Encoding Strategy"
 """)
 
 # initialize variables
-st.session_state['new_fie'] = False
 
 
 uploaded_file = st.file_uploader("Choose a file")
@@ -32,13 +36,16 @@ uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:  
     file_name = uploaded_file.name
     df_initial = pd.read_csv(uploaded_file, index_col=False)
-    st.dataframe(df_initial.head(7))
-    st.session_state['new_fie'] = True
+    st.session_state['new_file'] = True
 
-if st.session_state['new_fie'] == True:
+
+if 'new_file' in st.session_state and st.session_state['new_file'] == True:
     dir_and_raw_file_name = "data/" + "RAW_" + file_name
     df_initial.to_csv(dir_and_raw_file_name, index=False)
     dir_and_INIT_PROC_file_name =  "data/" + "INIT_PROC_" + file_name
+    st.session_state['new_file'] = False
+    st.session_state['df_in_process'] = df_initial
+    
 
     # woulld have processing steps here to convert df_initial to df_ready_for_encoding.
     # for now, just copy it.

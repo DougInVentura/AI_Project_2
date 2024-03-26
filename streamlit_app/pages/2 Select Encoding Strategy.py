@@ -30,11 +30,16 @@ import datetime
 # this app uses 'Streamlit' for simple web development.
 # references to st. are streamlit objects
 
-st.set_page_config(layout="wide")
 
-st.write("""# 👋 Select Encoding Screen 👋
-### Project 2 ASU AI Course: Supervised Machine Learning Classification App for Preprocessing, Encoding, Model Building and Scoring
-#### This page will help you define the encoding matrix for use in "Select Encoding..." page to encode the data.
+st.set_page_config(
+    layout="wide",
+    page_title="👋 Select Encoding Screen 👋",
+    page_icon="👋"
+)
+
+
+st.write("""### Project 2 ASU AI Course: Supervised Machine Learning Classification App for Preprocessing, Encoding, Model Building and Scoring
+#### This page will help you define the encoding dictonary for use in "Use Selected Encoding Steps..." page to encode the data.
          
 ##### Select INIT_PROC_###.csv file from the data directory you want to work with to begin the process
 ___________________________________________________________________________________________________________________________________
@@ -59,12 +64,15 @@ if st.session_state["df_loaded"] == True:
     df_column_actions = pd.DataFrame({'column_names':df_test_1.columns,'the_types':df_test_1.dtypes}).sort_values(by = 'the_types').reset_index(drop=True)
     df_column_actions['encode_num'] = 1
     df_column_actions['max_categor'] = np.NaN
+    df_column_actions['ordinal_order'] = str(np.NaN)
     # Now set up the instructions for specifying the Encoding
     st.write("""For each column name, enter one of the following in the Encoded_Num field...\n 
     1  for  'One_Hot_Encoding' \n
     2  for  'Label Encoding \n
     3  for  'Ordinal Encoding or \n
-    4  for  'Numeric Scaling only' """)
+    4  for  'Numeric Scaling only' 
+    (for OneHotEncoding and OrdinalEncoding can specify max_categories
+    and for OrdinalEncoding, must specify Ordinal Order based on the unique entries (use Unique popover))""")
 
     with st.popover("Open Column Value Count Window"):
         st.markdown("Column Value Counts... 👋")
@@ -72,17 +80,25 @@ if st.session_state["df_loaded"] == True:
         for theCol in df_test_1.columns:
             st.write(df_test_1[theCol].value_counts())
 
-    # Set up the data editor with the Encoding Matrix
+    with st.popover("Open Unique Values Window (for Ordinal encoding)"):
+        st.markdown("Unique values are... 👋")
+        st.write("Value Counts for columns...")
+        for theCol in df_test_1.columns:
+            st.write(f"Column: {theCol}")
+            st.write(df_test_1[theCol].unique())
+
+    # Set up the data editor with the Encoding dictonary
     edited_df = st.data_editor(df_column_actions)
 
     # Process click of 'Ready... ' button
-    if st.button('Ready: Make Encoding Matrix'):
+    if st.button('Ready: Make Encoding Dictonary'):
         # these are the encoding lists which will have the columns that need the different processing types.
         st.session_state['Encoding_Table_Ready'] = True
         OHE = []
         LabEnc = []
         OrdE = []
         NS = []
+        ord_order_list = []
         # for any OHE, max_categories can be specified.
         max_categories_OHE = []
         # Which encoding is used list
@@ -94,6 +110,7 @@ if st.session_state["df_loaded"] == True:
             the_col = row['column_names']
             encoding_num = row['encode_num']
             max_cat = row['max_categor']
+            ord_order = row['ordinal_order'] #zzz
             # Process cell values as needed
             
             match encoding_num:
@@ -104,6 +121,7 @@ if st.session_state["df_loaded"] == True:
                     LabEnc.append(the_col)
                 case 3:
                     OrdE.append(the_col)
+                    ord_order_list.append({the_col:ord_order})
                 case 4:
                     NS.append(the_col)
                 case _:
@@ -113,7 +131,8 @@ if st.session_state["df_loaded"] == True:
         Label Encoding:          {LabEnc}\n  
         Ordinal Encoding is:     {OrdE}\n
         One Hot Encoding (OHE):  {OHE}\n
-        Max Categoies for OHE:   {max_categories_OHE} """)  
+        Max Categoies for OHE:   {max_categories_OHE}\n
+        Order for Ordinal E:     {ord_order} """)  
         
         if len(OHE) > 0:
             which_encoding.append('OHE')
@@ -133,7 +152,8 @@ if st.session_state["df_loaded"] == True:
                         'max_categories_OHE':max_categories_OHE,
                         'current_date_time':date_time_str}
         st.session_state['Encoding_Dict_Ready'] = True
+        st.session_state['encoding_dict'] = encoding_dict
         with open("data/Encoding_Dictionary.txt", "w") as file:
             json.dump(encoding_dict, file)  # encode dict into JSON
-        st.write("### Encoding Matrix has been saved")
+        st.write("### Encoding Dictionary has been saved")
         
