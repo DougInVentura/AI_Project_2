@@ -20,11 +20,10 @@ st.set_page_config(
 )
 
 st.write("""### Project 2 ASU AI Course: Supervised Machine Learning Classification App for Preprocessing, Encoding, Model Building and Scoring
-         
+### Page: **Select Data File and Init Proc**
 
 Select csv file. It will upload to a dataframe and be saved initially with a RAW_ suffix in the data directory.
-After Initial preprocessing, the file created will be data\INIT_PROCESS_file_name.csv
-INIT_PROCESS_file_name.csv will be used for "2 Select Encoding Strategy"
+After selecting data file, go to page "2 Select Encoding Strategy"
   
 """)
 
@@ -32,7 +31,7 @@ INIT_PROCESS_file_name.csv will be used for "2 Select Encoding Strategy"
 
 
 uploaded_file = st.file_uploader("Choose a file")
-# might want as a diagnosic shown only w button click: st.write(uploaded_file)
+
 if uploaded_file is not None:  
     file_name = uploaded_file.name
     df_initial = pd.read_csv(uploaded_file, index_col=False)
@@ -42,40 +41,26 @@ if uploaded_file is not None:
 if 'new_file' in st.session_state and st.session_state['new_file'] == True:
     dir_and_raw_file_name = "data/" + "RAW_" + file_name
     df_initial.to_csv(dir_and_raw_file_name, index=False)
-    dir_and_INIT_PROC_file_name =  "data/" + "INIT_PROC_" + file_name
+    dir_and_IN_PROCESS_file_name =  "data/" + "IN_PROCESS_" + file_name
     st.session_state['new_file'] = False
     st.session_state['df_in_process'] = df_initial
-    
+  
 
     # woulld have processing steps here to convert df_initial to df_ready_for_encoding.
     # for now, just copy it.
     df_ready_for_encoding = df_initial.copy()
-    df_ready_for_encoding.to_csv(dir_and_INIT_PROC_file_name, index=False)
+    df_ready_for_encoding.to_csv(dir_and_IN_PROCESS_file_name, index=False)
 
-    st.write("#### Top of dataframe")
+    st.write("#### Top of Loaded dataframe")
     st.write(df_initial.head(10))
     
     # df.info() does not return anything to python, so need to pipe it
-    
-    
     buffer = io.StringIO() 
     df_initial.info(buf=buffer)
     s = buffer.getvalue()  
     st.text(f"#### {s}")
 
-    
-    
-    the_char= st.text_input("Enter the missing char code (will substitute NULLs in its place)")
-    if len(the_char) > 1:
-        st.text(f"Needed single character received {the_char}, which is length of {len(the_char)}")
-        ready_2_replace = False
-    elif len(the_char) <= 0:
-        ready_2_replace = False
-        st.text(f"Did not receive a character. Enter a character to replace")
-    else:
-        ready_2_replace = True
-        st.text("would be ready to replace")
         
-    
+    st.text(f"dataframe value_counts \n{df_initial.value_counts()}")
    
 
