@@ -47,23 +47,25 @@ st.write("""### Project 2 ASU AI Course: Supervised Machine Learning Classificat
 ___________________________________________________________________________________________________________________________________
 """)
 
-st.session_state["df_loaded"] = False
-if 'df_in_process' in st.session_state:
-    df_test_1 = st.session_state['df_in_process']
-    st.session_state["df_loaded"] = True
-else:
-    uploaded_file = st.file_uploader("##### Choose the INIT_PROC_###.csv file from the data directory")
-    if uploaded_file is not None:  
-        df_test_1 = pd.read_csv(uploaded_file, index_col=False)  # get rid of the index)
-        st.session_state['df_in_process'] = df_test_1
-        st.session_state["df_loaded"] = True
+def get_default_encode_num(df):
+    encode_list = []
+    for the_col in df.columns:
+        if df[the_col].dtype.name == 'object':
+            encode_list.append(1)
+        else:
+            encode_list.append(4)
+    return encode_list
 
+if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
+    df_initial = st.session_state['df_initial']
+    X_in_process_df = st.session_state['X_in_process_df']
+    y_df = st.session_state['y_df']
 
-if ('df_loaded' in st.session_state) and st.session_state["df_loaded"]:
-    st.dataframe(df_test_1.head(7))
+    st.dataframe(X_in_process_df.head(7))
+    # Need to code the 'object' columns with a 4 (numeric only) and code the non-object columns with a 1 (default is one hot encoding)
+    default_encoding_list = get_default_encode_num(X_in_process_df)
     # Now set up the Encoding DF, which has the column names, the types, a place for the Encoding Number (type of encoding selected)
-    df_column_actions = pd.DataFrame({'column_names':df_test_1.columns,'the_types':df_test_1.dtypes}).sort_values(by = 'the_types').reset_index(drop=True)
-    df_column_actions['encode_num'] = 1
+    df_column_actions = pd.DataFrame({'column_names':X_in_process_df.columns,'the_types':X_in_process_df.dtypes, "encode_num":default_encoding_list}).sort_values(by = 'the_types').reset_index(drop=True)
     df_column_actions['ordinal_order'] = str(np.NaN)
     # Now set up the instructions for specifying the Encoding
     st.write("""For each column name, enter one of the following in the Encoded_Num field...\n 
@@ -75,14 +77,14 @@ if ('df_loaded' in st.session_state) and st.session_state["df_loaded"]:
 
     with st.popover("Open Column Value Count Window"):
         st.markdown("Value Counts for Columns... 👋")
-        for theCol in df_test_1.columns:
-            st.write(df_test_1[theCol].value_counts())
+        for theCol in X_in_process_df.columns:
+            st.write(X_in_process_df[theCol].value_counts())
 
     with st.popover("Open Unique Values Window (for Ordinal encoding)"):
         st.markdown("Value Counts for columns... 👋")
-        for theCol in df_test_1.columns:
+        for theCol in X_in_process_df.columns:
             st.write(f"Column: {theCol}")
-            st.write(df_test_1[theCol].unique())
+            st.write(X_in_process_df[theCol].unique())
 
     # Set up the data editor with the Encoding dictonary
     edited_df = st.data_editor(df_column_actions)
@@ -148,4 +150,22 @@ if ('df_loaded' in st.session_state) and st.session_state["df_loaded"]:
         with open("data/Encoding_Dictionary.txt", "w") as file:
             json.dump(encoding_dict, file)  # encode dict into JSON
         st.write("### Encoding Dictionary has been saved Ready for next step. Now go to 'Use Selected Encoding Steps...'")
+
+        # train_test_split to get the X_train, X_test, y_train, y_test
+        X_train, X_test, y_train, y_test = train_test_split(X_in_process_df, y_df, random_state=42)
+        # reset the indexes
+        X_train.reset_index(drop = True, inplace=True)
+        X_test.reset_index(drop = True, inplace=True)
+        y_train.reset_index(drop = True, inplace=True)
+        X_test.reset_index(drop = True, inplace=True)
+        X_train.reset_index(drop = True, inplace=True)
+        st.session_state['X_train'] = X_train
+        st.session_state['X_test'] = X_test
+        st.session_state['y_train'] = y_train
+        st.session_state['y_test'] = y_test
+        st.session_state['train_test_loaded'] = True
+
+else:   # df_Loaded either not in session_state or NOT true. Either way, user must go back to 'select daa file or preprocessing'
+    st.write("### X, y and Initial dataframes not registering as loaded. Go back to either 'Select datafile...' or 'preprocessor'")
+    st.session_state['train_test_loaded'] = False
         

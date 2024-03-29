@@ -23,23 +23,28 @@ st.set_page_config(
 st.write("""### Page: **Use Selected Encoding Steps**
 #### Page uses Enconding Dictionary and Selected Dataframe to produce Encoded and Scaled Dataframe""")
 
-def do_OHE_encoding(df, column_list, encoding_dict):
+def do_OHE_encoding(X_train, X_test, column_list):
     '''Function performs one hot encoding. 
-        Arguments   : df -> the dataframe of interest
-                    : column_list -> list of columns in df to do one hot encoding on
+        Arguments   : X_train, X_test -> the dataframe of interest
+                    : column_list -> list of columns in X_train and X_test to perform one hot encoding
         Returns     : Dataframe that has underwent one hot encoding.  column names are original names, underscore, column value. these are from get_feature_names_out(column_list)
     '''
     # first create the max categories array
+
     encoder_OHE = OneHotEncoder()
-    encoded_data = encoder_OHE.fit_transform(df[column_list]).toarray()
+    X_all = pd.concat(X_train[column_list], X_test[column_list], axis=0)
+    encoder_OHE.fit(X_all[column_list])
+    X_train_OHE_array = encoder_OHE.transform(X_train[column_list]).toarray()
+    X_test_OHE_array = encoder_OHE.transform(X_test[column_list]).toarray()
     ohe_feature_names = encoder_OHE.get_feature_names_out(column_list)
-    df_OHE = pd.DataFrame(encoded_data, columns = ohe_feature_names)  # columns = feature_names_out  , columns = encoder_OHE.get_feature_names_out(column_list)
-    return df_OHE
+    X_train_OHE_df = pd.DataFrame(X_train_OHE_array, columns = ohe_feature_names)  # columns = feature_names_out  , columns = encoder_OHE.get_feature_names_out(column_list)
+    X_test_OHE_df = pd.DataFrame(X_test_OHE_array, columns = ohe_feature_names)
+    return X_train_OHE_df, X_test_OHE_df
 
 # ----------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------
-def do_Ordinal_Encoding(df,column_list, encoding_dict):
+def do_Ordinal_Encoding(X_train, X_test,column_list, encoding_dict):
     '''
     Does ordinal encoding for specified columns.
     Arguments: df -> this is the entire dataframe you are encoding
@@ -48,10 +53,12 @@ def do_Ordinal_Encoding(df,column_list, encoding_dict):
     Internal Notes: In a loop, displays each column name and unique values. User input is the order of the unique values, which is needed to do Ord Encoding correctly.
     '''
     
-    # it is called df_converted, but will converted through the loop below
-    df_converted = df[column_list]
+    # it is called X_txxx_converted, but will converted through the loop below one column at a time
+    X_train_converted = X_train[column_list].copy()
+    X_test_converted = X_test[column_list].copy()
+    
     for i, the_col in enumerate(column_list):
-        uniq_levels = df_converted[the_col].unique()
+        uniq_levels = X_train[the_col].unique()
         # the encoding_dict has the Ordinal encoding order for each affected column. Get it, sort the category string and set up to use pd.Categorical to encode the column.
         order_str = encoding_dict['ord_order_list'][i][the_col]
         order_list = order_str.split()
@@ -59,79 +66,109 @@ def do_Ordinal_Encoding(df,column_list, encoding_dict):
         ord_sorted_df = ord_df.sort_values(by='the_order').reset_index(drop=True)
         ord_sorted_list = ord_sorted_df['categories'].to_list()
         # using pandas Categorical is much easier than the Ord Encoder, which requires multiple reshaping and multiple lines of code.
-        encoded_data = pd.Categorical(df_converted[the_col], categories=ord_sorted_list, ordered=True).codes
-        df_converted = df_converted.reset_index(drop=True)
-        # trouble w standard sytax. using this as work around!
-        df_converted[the_col] = encoded_data
+        X_train_Ord_col = pd.Categorical(X_train_converted[the_col], categories=ord_sorted_list, ordered=True).codes
+        X_test_Ord_col = pd.Categorical(X_test_converted[the_col], categories=ord_sorted_list, ordered=True).codes
         
-    # st.write("In do_Ordinal_Encding, 'df_converted' is as follows (after loop)")
-    # st.dataframe(df_converted)
-    return df_converted
+        # trouble w standard sytax. using this as work around!
+        X_train_converted[the_col] = X_train_Ord_col
+        X_test_converted[the_col] = X_test_Ord_col
+
+    return X_train_converted, X_test_converted
         
 # -----------------------------------------------------------------------------------------------------------
-def encode_df(df, encoding_dict):
+def encode_X_train_test(X_train, X_test, encoding_dict):
     '''
     Funtion orchestrates encoding using OHE, Label Encoding, Ordinal Encoding and finally all columns go through Standard Scaling
-    Arguments   : df: This is the dataframe to encode
+    Arguments   : X_train, X_test: This is the dataframe to encode
                 : 
     '''
-    # st.write(f"top of encode_df.  encoding_dict is: {encoding_dict}")
-    frames = []  # in the end, individual data frames for OHE, Lab Encoding, Ord Encoding and Standard Scaping are appended to frames for column merging using pd.concat
+    # st.write(f"top of encode_X_train_test.  encoding_dict is: {encoding_dict}")
+    X_train_frames = []  # in the end, individual data frames for OHE, Lab Encoding, Ord Encoding and Standard Scaping are appended to frames for column merging using pd.concat
+    X_test_frames = []
+    pdb.set_trace()
     for the_key in encoding_dict.keys():
         column_list = encoding_dict[the_key]
         # Not all of the items in the encoding_dict need encoding. The column_list will be len() == 0
         if len(column_list) > 0:
             match the_key:
                 case 'OHE':
-                    df_OHE = do_OHE_encoding(df, column_list, encoding_dict)
+                    X_train_OHE, X_test_OHE = do_OHE_encoding(X_train, X_test, column_list)
                     # function returns dataframe which has One Hot Encoding applied
-                    frames.append(df_OHE)
+                    X_train_frames.append(X_train_OHE)
+                    X_test_frames.append(X_test_OHE)
                 case 'LabEnc':
                     # do label encoding
-                    pdb.set_trace()
                     encoder_LE = LabelEncoder()
+                    # I am going to train on all the X's across X train and X test. It will not cause 'leakage' and it will ensure no missing categories / level
+                    # in X_test
+                    X_all = pd.concat(X_train[column_list], X_test[column_list], axis=0)
+                    encoder_LE.fit(X_all[column_list])
                     # Generate dataframe with with label encoding applied to select columns
-                    df_encoded_LE = df[column_list].apply(lambda col: encoder_LE.fit_transform(col))
-                    frames.append(df_encoded_LE)
+                    
+                    X_train_LE = X_train[column_list].apply(lambda col: encoder_LE.transform(col))
+                    X_test_LE = X_test[column_list].apply(lambda col: encoder_LE.transform(col))
+                    X_train_frames.append(X_train_LE)
+                    X_test_frames.append(X_test_LE)
                 case 'OrdE':
-                    df_Ordinal = do_Ordinal_Encoding(df,column_list,encoding_dict)
+                    X_train_Ordinal, X_test_Ordinal = do_Ordinal_Encoding(X_train, X_test,column_list,encoding_dict)
                     # Function above returns dataframe with Ordinal Encoding (as specified in the function) to the selected columns
-                    frames.append(df_Ordinal)
+                    X_train_frames.append(X_train_Ordinal)
+                    X_test_frames.append(X_test_Ordinal)
                 case 'NS':
                     # scaling not done at this point. BUT need those columns of the df for next steps below.
-                    df_to_only_scale = df[column_list]
-                    frames.append(df_to_only_scale)
+                    X_train_to_only_scale = X_train[column_list]
+                    X_test_to_only_scale = X_test[column_list]
+                    X_train_frames.append(X_train_to_only_scale)
+                    X_test_frames.append(X_test_to_only_scale)
                 case 'max_categories_OHE':
                     message = 'do nothing. not in use'
-                case 'max_categories_OHE' | 'current_date_time':
+                case 'current_date_time':
                     message = 'do nothing. not in use'
                 case _:
-                    st.text(f"reached case_ in encode_df. the_key is: {the_key}")
+                    st.text(f"reached case_ in encode_X_train_test. the_key is: {the_key}")
             
     # we now have all of the encoding pieces of the dataframe. they are in the 'frames' list. Concat and apply standard scaler
-    df_to_scale = pd.concat(frames, axis = 1)
-    st.write("df to scale created. Shown below... Will also archive in data dir as df_just_before_scaling.csv")
-    st.dataframe(df_to_scale)
-    df_to_scale.to_csv("df_just_before_scaling.csv")
+    X_train_to_scale = pd.concat(X_train_frames, axis = 1)
+    X_test_to_scale = pd.concat(X_test_frames, axis = 1)
+    st.write("X_train to scale created. Shown below... Also archived in data dir as X_train_before_scaling.csv")
+    st.dataframe(X_train_to_scale)
+    X_train_to_scale.to_csv("data/X_train_before_scaling.csv")
+    # Now do the X_test_to_scale
+    st.write("X_test to scale created. Shown below... Also archived in data dir as X_test_before_scaling.csv")
+    st.dataframe(X_test_to_scale)
+    X_train_to_scale.to_csv("data/X_test_before_scaling.csv")
+
+    # Now do the standard scaler
     scaler = StandardScaler()
-    scaled_array = scaler.fit_transform(df_to_scale)
-    # scaled_array us numpy array. Convert to dataframe
-    df_scaled = pd.DataFrame(scaled_array, columns = df_to_scale.columns)
-    st.text("scaled dataframe...")
-    st.dataframe(df_scaled)
-    df_scaled.to_csv("df_encoding_and_scaling.csv")
-    return df_scaled
+    X_train_scaled_array = scaler.fit_transform(X_train_to_scale)
+    X_test_scaled_array = scaler.transform(X_test_to_scale)
+    # scaler returns numpy array. Convert to dataframe
+    X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train.columns)
+    X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test.columns)
+    st.text("X_train_scaled dataframe...")
+    st.dataframe(X_train_scaled_df)
+    st.text("X_test_scaled dataframe...")
+    st.dataframe(X_test_scaled_df)
+    X_train_scaled_df.to_csv("data/X_train_scaled_df.csv", index = False)
+    X_test_scaled_df.to_csv("data/X_test_scaled_df.csv", index = False)
+    return X_train_scaled_df, X_test_scaled_df
 
 # ----------- MAIN   MAIN   MAIN ----------------------------------------
 
-if ('df_loaded' in st.session_state) and ('Encoding_Dict_Ready' in st.session_state) and st.session_state["df_loaded"] and st.session_state['Encoding_Dict_Ready']:
+if ('df_loaded' in st.session_state) and ('Encoding_Dict_Ready' in st.session_state) and 'train_test_loaded' in st.session_state \
+        and st.session_state["df_loaded"] and st.session_state['Encoding_Dict_Ready'] and st.session_state['train_test_loaded']:
+    X_train = st.session_state['X_train']
+    X_test = st.session_state['X_test']
+    y_train = st.session_state['y_train']
+    y_test = st.session_state['y_test']
     st.write("Dataframe and Encoding Dictionary are Loaded... Proceeding")
-    df_to_encode = st.session_state['df_in_process']
-    st.session_state["df_to_encode"] = True
+    
     encoding_dict = st.session_state["encoding_dict"]
-    df_encoded_and_scaled = encode_df(df_to_encode, encoding_dict)
-    st.session_state['is_df_scaled'] = True
-    st.session_state['df_scaled'] = df_encoded_and_scaled
+    
+    X_train_scaled, X_test_scaled = encode_X_train_test(X_train, X_test, encoding_dict)
+    st.session_state['are_X_frames__scaled'] = True
+    st.session_state['X_train_scaled'] = X_train_scaled
+    st.session_state['X_test_scaled'] = X_test_scaled
     st.write("**Ready to 'Run and Score Models'**")
 else:
     st.write("Go back to 'Select Encoding Strategy' to select dataframe and build encoding dictionary")

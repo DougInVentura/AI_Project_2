@@ -1,1 +1,1 @@
-{"which_encoding_list": ["OHE", "NS", "LabEnc"], "OHE": ["animal", "animal_name"], "NS": ["rand_num", "weight"], "LabEnc": ["breed", "education"], "OrdE": [], "ord_order_list": [], "current_date_time": "2024-03-26 14:58:06.915230"}
+{"which_encoding_list": ["OHE", "NS", "OrdE"], "OHE": ["animal", "animal_name", "breed"], "NS": ["rand_num", "weight"], "LabEnc": [], "OrdE": ["education"], "ord_order_list": [{"education": "2 3 1 4"}], "current_date_time": "2024-03-28 17:53:30.984110"}
