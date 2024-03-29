@@ -143,7 +143,7 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     X_train_scaled_array = scaler.fit_transform(X_train_to_scale)
     X_test_scaled_array = scaler.transform(X_test_to_scale)
     # scaler returns numpy array. Convert to dataframe
-    pdb.set_trace()
+    #pdb.set_trace()
     X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train_to_scale.columns)
     X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test_to_scale.columns)
     st.text("X_train_scaled dataframe...")

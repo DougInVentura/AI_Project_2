@@ -18,9 +18,9 @@ if ('df_scaled' in st.session_state) and (st.session_state['is_df_scaled']):
 
     #TODO: remove this once Doug has created the data split session variables below
     #Split x and y 
-    test_df = pd.read_csv("data/account_predict_data.csv")
-    y_df = test_df['churn'] 
-    X_df = df_scaled.loc[:, df_scaled.columns != 'churn']
+    #test_df = pd.read_csv("data/account_predict_data.csv")
+    #y_df = test_df['churn'] 
+    #X_df = df_scaled.loc[:, df_scaled.columns != 'churn']
        
     
     #X_df = df_scaled.iloc[:,:-1]
@@ -29,11 +29,12 @@ if ('df_scaled' in st.session_state) and (st.session_state['is_df_scaled']):
     #TODO: Doug will be doing the split elsewhere, so use that instead once it exists
     #Do the train test split
     #TODO: uncomment this once doug has created these variables
-    if 'X_train' in st.session_state:
-        X_train = st.session_state['X_train']
+if ('are_X_frames__scaled' in st.session_state) and (st.session_state['are_X_frames__scaled']):
+    if 'X_train_scaled' in st.session_state:
+        X_train = st.session_state['X_train_scaled']
 
-    if 'X_test' in st.session_state:
-        X_test = st.session_state['X_test']
+    if 'X_test_scaled' in st.session_state:
+        X_test = st.session_state['X_test_scaled']
 
     if 'y_train' in st.session_state:
         y_train = st.session_state['y_train']
@@ -43,7 +44,7 @@ if ('df_scaled' in st.session_state) and (st.session_state['is_df_scaled']):
     
 
     #TODO: remove this once doug has created the session state for these variables
-    X_train, X_test, y_train, y_test = train_test_split(X_df, y_df, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X_df, y_df, random_state=42)
         
     #TODO: we might replace several of these with the lazy classifier since it does alot of comparrison work itself
     #Define/select which classifiers to use (For now just use the ones below)  
@@ -104,5 +105,6 @@ if ('df_scaled' in st.session_state) and (st.session_state['is_df_scaled']):
         #classifier_score_string.join("\n")
     #total_score_string = "".join(classifier_score_string)
     st.write("All Done!")
+    print("All Done!")
 
     #st.write(classifier_score_string)
