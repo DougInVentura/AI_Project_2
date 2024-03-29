@@ -32,7 +32,7 @@ def do_OHE_encoding(X_train, X_test, column_list):
     # first create the max categories array
 
     encoder_OHE = OneHotEncoder()
-    X_all = pd.concat(X_train[column_list], X_test[column_list], axis=0)
+    X_all = pd.concat([X_train[column_list], X_test[column_list]], axis=0)
     encoder_OHE.fit(X_all[column_list])
     X_train_OHE_array = encoder_OHE.transform(X_train[column_list]).toarray()
     X_test_OHE_array = encoder_OHE.transform(X_test[column_list]).toarray()
@@ -85,7 +85,7 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     # st.write(f"top of encode_X_train_test.  encoding_dict is: {encoding_dict}")
     X_train_frames = []  # in the end, individual data frames for OHE, Lab Encoding, Ord Encoding and Standard Scaping are appended to frames for column merging using pd.concat
     X_test_frames = []
-    pdb.set_trace()
+
     for the_key in encoding_dict.keys():
         column_list = encoding_dict[the_key]
         # Not all of the items in the encoding_dict need encoding. The column_list will be len() == 0
@@ -101,7 +101,7 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
                     encoder_LE = LabelEncoder()
                     # I am going to train on all the X's across X train and X test. It will not cause 'leakage' and it will ensure no missing categories / level
                     # in X_test
-                    X_all = pd.concat(X_train[column_list], X_test[column_list], axis=0)
+                    X_all = pd.concat([X_train[column_list], X_test[column_list]], axis=0)
                     encoder_LE.fit(X_all[column_list])
                     # Generate dataframe with with label encoding applied to select columns
                     
@@ -143,8 +143,9 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     X_train_scaled_array = scaler.fit_transform(X_train_to_scale)
     X_test_scaled_array = scaler.transform(X_test_to_scale)
     # scaler returns numpy array. Convert to dataframe
-    X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train.columns)
-    X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test.columns)
+    pdb.set_trace()
+    X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train_to_scale.columns)
+    X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test_to_scale.columns)
     st.text("X_train_scaled dataframe...")
     st.dataframe(X_train_scaled_df)
     st.text("X_test_scaled dataframe...")
