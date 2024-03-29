@@ -159,7 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Ignore the automatically created csv files
+# Ignore the automatically created txt and csv files
 data/IN_PROCESS*.csv
 data/INIT_PROC*.csv
 data/RAW*.csv
@@ -171,3 +171,5 @@ data/X_test_before_scaling.csv
 data/X_test_scaled_df.csv
 data/X_train_before_scaling.csv
 data/X_train_scaled_df.csv
+data/df_just_before_imputing.csv
+data/final_imputed_df.csv
