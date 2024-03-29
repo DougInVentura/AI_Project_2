@@ -58,7 +58,8 @@ def do_Ordinal_Encoding(X_train, X_test,column_list, encoding_dict):
     X_test_converted = X_test[column_list].copy()
     
     for i, the_col in enumerate(column_list):
-        uniq_levels = X_train[the_col].unique()
+        pdb.set_trace()
+        uniq_levels = encoding_dict['ord_levels_for_col'][i][the_col]
         # the encoding_dict has the Ordinal encoding order for each affected column. Get it, sort the category string and set up to use pd.Categorical to encode the column.
         order_str = encoding_dict['ord_order_list'][i][the_col]
         order_list = order_str.split()
@@ -143,7 +144,6 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     X_train_scaled_array = scaler.fit_transform(X_train_to_scale)
     X_test_scaled_array = scaler.transform(X_test_to_scale)
     # scaler returns numpy array. Convert to dataframe
-    pdb.set_trace()
     X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train_to_scale.columns)
     X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test_to_scale.columns)
     st.text("X_train_scaled dataframe...")

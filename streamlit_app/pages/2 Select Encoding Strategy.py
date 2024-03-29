@@ -98,6 +98,7 @@ if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
         OrdE = []
         NS = []
         ord_order_list = []
+        ord_levels_for_col = []
         # Which encoding is used list - from the dataframe edits user does
         which_encoding = []
 
@@ -116,7 +117,9 @@ if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
                     LabEnc.append(the_col)
                 case 3:
                     OrdE.append(the_col)
+                    pdb.set_trace()
                     ord_order_list.append({the_col:ord_order})
+                    ord_levels_for_col.append({the_col:list(X_in_process_df[the_col].unique())})
                 case 4:
                     NS.append(the_col)
                 case _:
@@ -126,6 +129,7 @@ if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
         Label Encoding:          {LabEnc}\n  
         Ordinal Encoding is:     {OrdE}\n
         One Hot Encoding (OHE):  {OHE}\n
+        ord_levels_for_col:      {ord_levels_for_col}\n
         Order for Ordinal E:     {ord_order_list} """)  
         
         if len(OHE) > 0:
@@ -144,6 +148,7 @@ if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
                         'LabEnc':LabEnc,
                         'OrdE':OrdE,
                         'ord_order_list': ord_order_list,
+                        'ord_levels_for_col': {ord_levels_for_col},
                         'current_date_time':date_time_str}
         st.session_state['Encoding_Dict_Ready'] = True
         st.session_state['encoding_dict'] = encoding_dict
