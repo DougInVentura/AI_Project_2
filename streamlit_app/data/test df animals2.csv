@@ -1,0 +1,18 @@
+animal,animal_name,rand_num,rand_delete2,weight,breed,education,the_y_loyalty
+cat,ari,10,10,15,alley,high school,1
+dog,coco,20,20,30,mut,college,3
+rat,willard,30,30,1,NYC rat,primary,2
+cat,ava,40,40,16,alley,high school,2
+dog,bear,50,50,70,golden,post grad,4
+cat,bismark,10,10,15,alley,college,2
+dog,fido,20,20,30,mut,primary,3
+rat,ratfink,30,30,1,NYC rat,high school,1
+cat,hairball,40,40,16,alley,post grad,2
+dog,killer,50,50,70,golden,high school,3
+cat,dumbo,10,10,15,alley,college,1
+dog,cruz,20,20,30,mut,primary,3
+rat,ratatat,30,30,1,NYC rat,primary,2
+cat,sleeper,40,40,16,alley,high school,3
+dog,bear,50,50,70,golden,post grad,4
+parrot,polly,60,60,4,africa parrot,primary,1
+duck,ducky,70,3,7,mallard,primary,1
