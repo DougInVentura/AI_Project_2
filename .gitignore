@@ -160,8 +160,11 @@ cython_debug/
 #.idea/
 
 # Ignore the automatically created csv files
-data/IN_PROCESS*.csv
-data/INIT_PROC*.csv
-data/RAW*.csv
-df_just_before_scaling.csv
+streamlit_app/data/IN_PROCESS*.csv
+streamlit_app/data/INIT_PROC*.csv
+streamlit_app/data/RAW*.csv
+streamlit_app/df_just_before_scaling.csv
 df_encoding_and_scaling.csv
+streamlit_app/data/Encoding_Dictionary.txt
+streamlit_app/data/X_IN_PROCESS.csv
+streamlit_app/data/y_IN_PROCESS.csv

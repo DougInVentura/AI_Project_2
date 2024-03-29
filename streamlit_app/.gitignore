@@ -165,3 +165,6 @@ data/INIT_PROC*.csv
 data/RAW*.csv
 df_just_before_scaling.csv
 df_encoding_and_scaling.csv
+data/Encoding_Dictionary.txt
+data/X_IN_PROCESS.csv
+data/y_IN_PROCESS.csv
