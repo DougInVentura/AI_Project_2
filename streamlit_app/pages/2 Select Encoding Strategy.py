@@ -183,6 +183,4 @@ Order for Ordinal Encoding:  {ord_order_list} """)
 
 if 'Ready_for_Use_Encoding' in st.session_state and st.session_state['Ready_for_Use_Encoding']:
     if st.button("Ready for 'Use Encoding Strategy. :blue[Click Here] to goto 'Use Encoding...'"):
-        st.write("tranferring....")
-        time.sleep(3)  # Pause for 3 seconds
         st.switch_page("pages/3 Use Selected Encoding Steps to Encode the Train and Test data.py")

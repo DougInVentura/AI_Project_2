@@ -125,19 +125,21 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
                     X_test_frames.append(X_test_to_only_scale)
                 case 'max_categories_OHE':
                     message = 'do nothing. not in use'
-                case 'current_date_time' | 'ord_order_list' | 'ord_levels_for_col':
+                case 'current_date_time' | 'ord_order_list' | 'ord_levels_for_col' | 'which_encoding_list':
                     message = 'do nothing. not in use'
                 case _:
-                    st.text(f"reached case_ in encode_X_train_test. the_key is: {the_key}")
+                    st.text(f"Reached case _ in encode_X_train_test. the_key is: {the_key}")
             
     # we now have all of the encoding pieces of the dataframe. they are in the 'frames' list. Concat and apply standard scaler
     X_train_to_scale = pd.concat(X_train_frames, axis = 1)
     X_test_to_scale = pd.concat(X_test_frames, axis = 1)
-    st.write("#### **X_train_to_scale**  - training data after encoding, prior to scaling, saved in data\X_train_before_scaling.csv")
+    st.write("#### **X_train_to_scale**  - Training data after encoding but prior to scaling")
+    st.write("Saved in data\X_train_before_scaling.csv")
     st.dataframe(X_train_to_scale)
     X_train_to_scale.to_csv("data/X_train_before_scaling.csv")
     # Now do the X_test_to_scale
-    st.write("#### **X_test_to_scale**  - test data after encoding, prior to scaling, saved in data\X_test_before_scaling.csv")
+    st.write("#### **X_test_to_scale**  - Test data after encoding but prior to scaling")
+    st.write("Saved in data\X_test_before_scaling.csv")
     st.dataframe(X_test_to_scale)
     X_train_to_scale.to_csv("data/X_test_before_scaling.csv")
 
@@ -148,10 +150,12 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     # scaler returns numpy array. Convert to dataframe
     X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train_to_scale.columns)
     X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test_to_scale.columns)
-    st.write("#### **X_train_scaled**  - training data after encoding and scaling, saved in data\X_train_scaled_df.csv")
+    st.write("#### **X_train_scaled** - Training data after encoding and scaling")
+    st.write("Saved in data\X_train_scaled_df.csv")
     st.dataframe(X_train_scaled_df)
-    st.text("X_test_scaled dataframe...")
-    st.write("#### **X_test_scaled**  - test data after encoding and scaling, saved in data\X_test_scaled_df.csv")
+
+    st.write("#### **X_test_scaled** - Test data after encoding and scaling")
+    st.write("Saved in data\X_test_scaled_df.csv")
     st.dataframe(X_test_scaled_df)
     X_train_scaled_df.to_csv("data/X_train_scaled_df.csv", index = False)
     X_test_scaled_df.to_csv("data/X_test_scaled_df.csv", index = False)
@@ -170,6 +174,7 @@ if ('df_loaded' in st.session_state) and ('Encoding_Dict_Ready' in st.session_st
     encoding_dict = st.session_state["encoding_dict"]
     
     X_train_scaled, X_test_scaled = encode_X_train_test(X_train, X_test, encoding_dict)
+
     st.session_state['are_X_frames__scaled'] = True
     st.session_state['X_train_scaled'] = X_train_scaled
     st.session_state['X_test_scaled'] = X_test_scaled

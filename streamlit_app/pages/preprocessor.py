@@ -115,12 +115,19 @@ and finally, perform mapping""")
         # start with delete
         if len(drop_col) > 0:
             X_in_process_df = X_in_process_df.drop(columns = drop_col)
-            st.write('after drop')
+            st.write('#### **After column drop(s)**')
         else:
-            st.write('no columns to drop in X dataframe')
-        st.dataframe(X_in_process_df)
+            st.write('#### **No columns to drop in X dataframe**')
+        col1, col2 = st.columns([1,3])
+        with col1:
+            st.write("#### **y dataframe**")
+            st.dataframe(y_df)
+        with col2:
+            st.write("#### **X dataframe**")
+            st.dataframe(X_in_process_df)
+            
         st.session_state['X_in_process_df'] = X_in_process_df
-        if 'dir_and_X_IN_PROCESS_fname' in st.session_state:  #zzz
+        if 'dir_and_X_IN_PROCESS_fname' in st.session_state:  
             dir_and_X_IN_PROCESS_fname = st.session_state['dir_and_X_IN_PROCESS_fname']
             X_in_process_df.to_csv(dir_and_X_IN_PROCESS_fname, index = False)
         else:
