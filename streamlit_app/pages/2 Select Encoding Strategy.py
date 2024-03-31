@@ -165,8 +165,8 @@ Order for Ordinal Encoding:  {ord_order_list} """)
             X_train.reset_index(drop = True, inplace=True)
             X_test.reset_index(drop = True, inplace=True)
             y_train.reset_index(drop = True, inplace=True)
-            X_test.reset_index(drop = True, inplace=True)
-            X_train.reset_index(drop = True, inplace=True)
+            y_test.reset_index(drop = True, inplace=True)
+            
             st.session_state['X_train'] = X_train
             st.session_state['X_test'] = X_test
             st.session_state['y_train'] = y_train
