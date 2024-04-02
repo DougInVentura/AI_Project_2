@@ -24,7 +24,7 @@ st.write("""### Project 2 ASU AI Course: Supervised Machine Learning Classificat
 ### Page: **Select Data File and Init Proc**
 
 Select csv file. It will upload to a dataframe, df_initial, and be saved archived with a RAW_ suffix in the data directory.
-After selecting data file, use the drop down to select and separate out the 'y' variable. Then goto "2 Select Encoding Strategy"
+After selecting data file, use the drop down to select and separate out the 'y' variable. Then go to "2 Select Encoding Strategy"
 """)
 
 # initialize variables
@@ -111,7 +111,7 @@ if 'df_initial_loaded' in st.session_state and st.session_state['df_initial_load
 
 if 'X and y loaded' in st.session_state and st.session_state['X and y loaded']:
     if st.button(":blue[READY: Proceed to 'Preprocessing?] Click to proceed"):
-        st.switch_page(("pages/preprocessor.py"))
+        st.switch_page(("pages/2 preprocessor.py"))
     st.write("Can also do some Exploratory Data Analysis / Graphing in 'EDA and Graphs' page")
     if st.button(":green[Click Here] for EDA and Graphs"):
         st.switch_page(("pages/EDA_and_graphs.py"))

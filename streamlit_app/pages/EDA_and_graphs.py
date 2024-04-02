@@ -25,7 +25,7 @@ st.write(f"""### Project 2 ASU AI Course: Supervised Machine Learning Classifica
 
 
 if st.button("Branch to Preprocessor"):
-    st.switch_page("preprocessor.py")
+    st.switch_page("pages/2 preprocessor.py")
 
 # st.session_state['df_initial'] = df_initial
 # st.session_state['df_initial_loaded'] = True

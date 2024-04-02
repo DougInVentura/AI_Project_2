@@ -140,7 +140,7 @@ else:
 
 if 'Preprocessing_complete' in st.session_state and st.session_state['Preprocessing_complete']:
     if st.button("Preprocessing is complete. :blue[Click here] to goto 'Select Encoding Strategy"):
-        st.switch_page("pages/2 Select Encoding Strategy.py")
+        st.switch_page("pages/3 Select Encoding Strategy.py")
 
 
   

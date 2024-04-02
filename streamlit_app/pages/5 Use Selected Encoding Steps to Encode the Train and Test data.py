@@ -185,4 +185,4 @@ else:
 
 if 'Ready_to_Run_and_Score' in st.session_state and st.session_state["Ready_to_Run_and_Score"]:
     if st.button(":blue[Click Here] to go to Run and Score Models"):
-        st.switch_page("pages/4 Run and Score Models.py")
+        st.switch_page("pages/6 Run and Score Models.py")

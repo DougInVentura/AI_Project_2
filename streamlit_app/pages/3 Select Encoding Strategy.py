@@ -57,9 +57,9 @@ def get_default_encode_num(df):
             encode_list.append(4)
     return encode_list
 
-if (('Ready_for_Use_Encoding' not in st.session_state or st.session_state['Ready_for_Use_Encoding'] == False)):
+if (('Ready_for_Imputation' not in st.session_state or st.session_state['Ready_for_Imputation'] == False)):
     if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
-        st.session_state['Ready_for_Use_Encoding'] = False  # at end of this block if all successful, then it becomes true
+        st.session_state['Ready_for_Imputation'] = False  # at end of this block if all successful, then it becomes true
         df_initial = st.session_state['df_initial']
         X_in_process_df = st.session_state['X_in_process_df']
         y_df = st.session_state['y_df']
@@ -174,13 +174,13 @@ Order for Ordinal Encoding:  {ord_order_list} """)
             st.session_state['train_test_loaded'] = True
 
             st.write("#### Encoding Dictionary has been saved Ready for next step.'")
-            st.session_state['Ready_for_Use_Encoding'] = True
+            st.session_state['Ready_for_Imputation'] = True
 
     else:   # df_Loaded either not in session_state or NOT true. Either way, user must go back to 'select daa file or preprocessing'
         st.write("### X, y and Initial dataframes not registering as loaded. Go back to either 'Select datafile...' or 'preprocessor'")
         st.session_state['train_test_loaded'] = False
-        st.session_state['Ready_for_Use_Encoding'] = False
+        st.session_state['Ready_for_Imputation'] = False
 
-if 'Ready_for_Use_Encoding' in st.session_state and st.session_state['Ready_for_Use_Encoding']:
-    if st.button("Ready for 'Use Encoding Strategy. :blue[Click Here] to goto 'Use Encoding...'"):
-        st.switch_page("pages/3 Use Selected Encoding Steps to Encode the Train and Test data.py")
+if 'Ready_for_Imputation' in st.session_state and st.session_state['Ready_for_Imputation']:
+    if st.button("Ready for 'Imputation. :blue[Click Here] to go to 'Imputation'"):
+        st.switch_page("pages/4 Imputation.py")
