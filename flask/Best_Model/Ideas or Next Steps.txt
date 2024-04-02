@@ -1,0 +1,15 @@
+UI Enhancement to support more models.
+  The current template is limited to 3 models using the small boxes at the bottom of the page.
+  Alter the UI to show a dropdown list of the models that can be selected. These models could be easily added to a table.
+  That table could have the model name, description and could link to other tables for dynamic hyper parameter field definition.
+  This would allow the classes that feed the next items to be created dynamically from table data.
+
+Object Relational UI for Model Hyper Parameter collection
+  Use Object relational mapping (ORM) to create a dynamic web UI that uses objects that define model hyper parameters
+  collect the hyper parameters, save them to make selection easy in the future and use collected values with the models.
+
+Object Relational preprocessing for data file columns
+  Use Object relational mapping (ORM) to create a dynamic web UI that displays columns from the selected data file
+  and allows the user to define preprocessing steps for each column. Save the preprocessing steps to make selection easy 
+  in the future and use collected values with the models when processing the file in the future.
+
