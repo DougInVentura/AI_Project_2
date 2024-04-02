@@ -186,6 +186,10 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
 
         st.write("All done imputing go to 'Use Selected Encoding Steps'")
 
-    if 'is_imputation_complete' in st.session_state and st.session_state["is_imputation_complete"]:
-        if st.button(":blue[Click Here] to go to Use Selected Encoding Steps"):
-            st.switch_page("pages/3 Use Selected Encoding Steps to Encode the Train and Test data.py")
+    else:   # df_Loaded either not in session_state or NOT true. Either way, user must go back to 'select daa file or preprocessing'
+        st.write("### X_train, X_test, and Initial dataframes not registering as loaded. Go back to either 'Select datafile...', 'preprocessor' or Select Encoding Strategy")
+        st.session_state['is_imputation_complete'] = False
+
+if 'is_imputation_complete' in st.session_state and st.session_state["is_imputation_complete"]:
+    if st.button(":blue[Click Here] to go to Use Selected Encoding Steps"):
+        st.switch_page("pages/3 Use Selected Encoding Steps to Encode the Train and Test data.py")
