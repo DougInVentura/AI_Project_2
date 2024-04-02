@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<!-- TODO
+        Look and the selected file and load previous settings from the config file.
+                   (Config file will be the same name as the data file but with a .config extension)
+        Display a list of fields and have t%hem choose which one they are tyring to predict.
+-->
+
+<body>
+    <div class="jumbotron">
+        <h2>Please upload or select a file to analyze</h2>
+        <p class="lead"> Using the controls below please upload or select a file and tell us the field that you would like the system to try to predit.</p>
+
+        {% if data %}
+            <p>Selected File: {{ data.file }}</p>
+        {% else %}
+            <h3>1. Select a file</h3>
+            <form method="POST" action="/file_chosen" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="file" accept=".csv" size="200" width="200">
+                    <p class="lead">Confirm file selection and upload for processing</p>
+                <input class="btn btn-default" type="submit" value="Confirm">
+            </form>
+        {% endif %}
+               
+        <!-- This section displays the field list allowing the user to select the field, the 'y',
+         that they want to predict -->
+            <form action="/field_selected" method="POST">
+                {% if data %}
+                <h3>Please select the field you would like to predict'</h3>
+                <select name="dropdown">
+                    {% for option in data.fields %}
+                        {% if option == data.selectedY %}
+                            <option value="{{ option }}" selected>{{ option }}</option>
+                        {% else %}
+                            <option value="{{ option }}">{{ option }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+                <input class="btn btn-default" type="submit" value="Confirm selection">
+                {% else %}
+                <p></p>
+                {% endif %}
+            </form>
+    </div>
+</body>
+
+
+{% endblock %}

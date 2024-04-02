@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>AutoML</h1>
+    <p class="lead"> AutoML is an automated machine learning tool that optimizes machine learning pipelines using genetic programming. It searches for the best preprocessing techniques, feature selection, and models for your data.</p>
+    <p>
+        These are some the key features of AutoML:
+        1. Automated Model Selection.
+        2. Huyperparameter Optimization.
+        3. Automatic Data Preprocessing - Handles value imputation, scaling and .
+        4. Ensemble Methods - Includes features such as stacking, blending and bagging to improve accuracy.
+        5. Model Interpretability - Provides feature importance analysis.
+    </p>
+    <br /><p>In the sections below we will illustrate the effectiveness of this tool. </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Speed</h2>
+        <p>
+            It took X seconds to evaluate the dataset provided.
+            (Improve this) - slow because it's doing a lot of work to find the best model.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Accuracy</h2>
+        <p>The best accuracy TPOT was able to achieve was X.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Graph</h2>
+        <p>Show graph</p>
+    </div>
+</div>
+{% endblock %}

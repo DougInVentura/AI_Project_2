@@ -1,0 +1,177 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\views.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\views.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Models\\tpot.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\tpot.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Utilities\\utils.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Utilities\\utils.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Ideas or Next Steps.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Ideas or Next Steps.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "graph.html",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\graph.html",
+              "RelativeDocumentMoniker": "Best_Model\\templates\\graph.html",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\graph.html",
+              "RelativeToolTip": "Best_Model\\templates\\graph.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-04-01T02:49:11.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "runserver.py",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\runserver.py",
+              "RelativeDocumentMoniker": "Best_Model\\runserver.py",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\runserver.py",
+              "RelativeToolTip": "Best_Model\\runserver.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-31T17:31:08.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "utils.py",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Utilities\\utils.py",
+              "RelativeDocumentMoniker": "Utilities\\utils.py",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Utilities\\utils.py",
+              "RelativeToolTip": "Utilities\\utils.py",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAACsAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-31T03:09:45.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Ideas or Next Steps.txt",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Ideas or Next Steps.txt",
+              "RelativeDocumentMoniker": "Ideas or Next Steps.txt",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Ideas or Next Steps.txt",
+              "RelativeToolTip": "Ideas or Next Steps.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-03-29T01:52:12.469Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "__init__.py (Best_Model)",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\__init__.py",
+              "RelativeDocumentMoniker": "Best_Model\\__init__.py",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\__init__.py",
+              "RelativeToolTip": "Best_Model\\__init__.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-29T00:57:43.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "select_file.html",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\select_file.html",
+              "RelativeDocumentMoniker": "Best_Model\\templates\\select_file.html",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\select_file.html",
+              "RelativeToolTip": "Best_Model\\templates\\select_file.html",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAACsAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-29T00:46:25.279Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "views.py",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\views.py",
+              "RelativeDocumentMoniker": "Best_Model\\views.py",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\views.py",
+              "RelativeToolTip": "Best_Model\\views.py",
+              "ViewState": "AQIAANQAAAAAAAAAAAApwOIAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-28T21:30:23.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\index.html",
+              "RelativeDocumentMoniker": "Best_Model\\templates\\index.html",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Best_Model\\templates\\index.html",
+              "RelativeToolTip": "Best_Model\\templates\\index.html",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAB8AAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-03-29T00:42:54.358Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "tpot.py",
+              "DocumentMoniker": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Models\\tpot.py",
+              "RelativeDocumentMoniker": "Models\\tpot.py",
+              "ToolTip": "D:\\ASU\\homework\\Project2\\WebSite\\Best_Model\\Models\\tpot.py",
+              "RelativeToolTip": "Models\\tpot.py",
+              "ViewState": "AQIAAGQAAAAAAAAAAAApwGUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-28T21:27:50.492Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>TPOT</h1>
+    <p class="lead" TPOT stands for Tree-based Pipeline Optimization tool. It is an automated machine learning (AutoML) tool in Python that optimizes machine learning pipelines using genetic programming. TPOT can automatically explore a wide range of machine learning algorithms and preprocessing techniques to find the best pipeline for a given dataset.</p>
+    <p>
+        {% if data %}
+        <img src="{{ url_for('static', filename=data.image_file) }}" alt="Dynamic Image" width="600" height="400">
+        {% else %}
+<p class="lead">The graph will be displayed here when this page is used with a model</p>
+    {% endif %}
+    </p>
+    <form method="POST" action="/return_to_model_page" enctype="multipart/form-data">
+    {% if data  %}
+        <button onclick="goBack()">Return to {{data.model_name}} page</button>
+        <input class="btn btn-default" type="submit" value="Return to {{data.model_name}} page">
+    {% else %}
+    {% endif %}
+     </form>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</div>
+
+{% endblock %}

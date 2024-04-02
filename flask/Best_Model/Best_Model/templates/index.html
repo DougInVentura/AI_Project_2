@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Project 2 - Models</h1>
+    <p class="lead">In this project we will evaluate multiple models to determine which one is the best for evaluating multiple data sets.</p>
+    <p>The followin models/tools will be evaluated:</p>
+    <p><h4><br />TPOT<br />H20 AutoML<br />model 3</h4></p>
+
+
+    {% if data %}
+        <h3>You selected</h3>
+        <p>Selected File: {{ data.selectedFile }}</p>
+        <p>Column to predict: ''{{data.fieldSelected}}''</p>
+
+        <p>Click below to select a different file or select a processing model below.</p>    
+        <a class="btn btn-default" href="{{ url_for('select_file')}}">Select a different file &raquo;</a>
+    {% else %}
+        <h3>Select a file to analyze</h3>
+        <a class="btn btn-default" href="{{ url_for('select_file')}}">Click to select your file &raquo;</a>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>TPOT</h2>
+        <p>
+            TPOT is one of the tools you can use to analyze your data.
+        </p>
+        <p><a class="btn btn-default" href="{{ url_for('tpot')}}">TPOT &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>H20 AutoML</h2>
+        <p>H2O AutoML is an automated machine learning tool developed by H2O.ai, a company specializing in open-source machine learning and artificial intelligence platforms. Some key fetures include:
+        <p><a class="btn btn-default" href="{{ url_for('automl') }}">H20 AutoML &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Model 3</h2>
+        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
+        <p><a class="btn btn-default" href="{{ url_for('model3') }}">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+{% endblock %}

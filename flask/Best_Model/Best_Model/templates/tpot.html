@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>TPOT</h1>
+    <p class="lead" TPOT stands for Tree-based Pipeline Optimization tool. It is an automated machine learning (AutoML) tool in Python that optimizes machine learning pipelines using genetic programming. TPOT can automatically explore a wide range of machine learning algorithms and preprocessing techniques to find the best pipeline for a given dataset.</p>
+    <p>
+        TPOT is an automated machine learning tool that optimizes machine learning
+        pipelines using genetic programming. It searches for the best preprocessing techniques,
+        feature selection, and models for your data.
+
+        In the sections below we will illustrate the effectiveness of this tool.
+    </p>
+    <form method="POST" action="/tpot_process" enctype="multipart/form-data">
+        {% if data %}
+        {% else %}
+            <p class="lead">This may take a while..</p>
+        {% endif %}
+        <input class="btn btn-default" type="submit" value="Begin Processing">
+
+
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Accuracy</h2>
+        {% if data  %}
+            <p>TPOT was able to predict churn with an accuracy value of: {{ data.accuracy * 100 }}%</p>
+        {% else %}
+            <p>The accuracy will be displayed once processing is complete.</p>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <h2>Important Factors</h2>
+        {% if data %}
+
+        <p>
+            These fields or factors were determined to have the highest impact on churn:<br>
+            <ul>
+                {% for feature in data.key_features_list %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </p>
+        {% else %}
+            <p>Important factors will be displayed once processing is complete.</p>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <h2>Visual Represtations </h2>
+        <form method="POST" action="/display_graph" enctype="multipart/form-data">
+            {% if data %}
+                <h3>Please select the field to see how it impacted {{ data.selectedY }}'</h3>
+                <select name="dropdown">
+                    {% for option in data.key_features %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <input class="btn btn-default" type="submit" value="Show Graph">
+            {% else %}
+                <p></p>
+            {% endif %}
+        </form>
+        <p></p>
+    </div>        
+</div>
+{% endblock %}
