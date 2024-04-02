@@ -7,7 +7,8 @@ st.set_page_config(
 )
 
 st.write("""# 👋 Welcome to Pipey 👋
-### Supervised Machine Learning Classification preprocessing, encoding and model building and scoring
+### Web-Based Supervised Machine Learning Classification Processor
+#### With Preprocessing, Encoding, Imputation, Model Building and Scoring
 ### Project 2 ASU AI Course: Cody, Doug, David
          
 ##### Version 0.2a """)

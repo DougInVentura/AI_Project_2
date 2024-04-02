@@ -28,7 +28,8 @@ After selecting data file, use the drop down to select and separate out the 'y' 
 """)
 
 # initialize variables
-
+if 'file_name' in st.session_state:
+    file_name = st.session_state['file_name']
 
 container_1 = st.empty()
 with container_1:
@@ -36,10 +37,12 @@ with container_1:
 
 if uploaded_file is not None:  
     file_name = uploaded_file.name
+    st.session_state['file_name'] = file_name
     df_initial = pd.read_csv(uploaded_file, index_col=False)
     st.session_state['new_file'] = True
     st.session_state['df_initial'] = df_initial
     st.session_state['df_initial_loaded'] = True
+    st.write(f"#### Working with file :blue[{file_name}]")
     # below we split into X and Y. we will not initialize df_loaded until that is done and in the session state.
 
 
@@ -91,11 +94,6 @@ if 'new_file' in st.session_state and st.session_state['new_file'] == True:
         y_select_container.empty()
         
   
-  
-if 'X and y loaded' in st.session_state and st.session_state['X and y loaded']:
-    if st.button(":blue[READY: Proceed to 'Preprocessing?] Click to proceed"):
-        st.switch_page(("pages/preprocessor.py"))
-
 if 'df_initial_loaded' in st.session_state and st.session_state['df_initial_loaded']:
     # df.info() does not return anything to python, so need to pipe it
     with st.popover("Summary stats for loaded dataframe"):
@@ -111,3 +109,9 @@ if 'df_initial_loaded' in st.session_state and st.session_state['df_initial_load
             st.text(f"dataframe df_initial value_counts are...\n{df_initial[the_col].value_counts()}")
    
 
+if 'X and y loaded' in st.session_state and st.session_state['X and y loaded']:
+    if st.button(":blue[READY: Proceed to 'Preprocessing?] Click to proceed"):
+        st.switch_page(("pages/preprocessor.py"))
+    st.write("Can also do some Exploratory Data Analysis / Graphing in 'EDA and Graphs' page")
+    if st.button(":green[Click Here] for EDA and Graphs"):
+        st.switch_page(("pages/EDA_and_graphs.py"))

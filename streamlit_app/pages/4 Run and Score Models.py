@@ -36,7 +36,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
         st.dataframe(X_test_scaled.head(10))
 
 
-    st.write(f"#### Ready to go. Proceeding")
+    st.write("#### Ready to go. Proceeding...")
 
 
 
@@ -50,6 +50,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     #Define/select which classifiers to use (For now just use the ones below)  
     lr = LogisticRegression(random_state=42)
     rf = RandomForestClassifier(random_state=42, max_depth=max_depth_try)
+    # for model scoring we implemented with svc, must use linear kernel
     svc = SVC(probability=True, kernel='linear',random_state=42)
     gbc = GradientBoostingClassifier(random_state=42)
     abc = AdaBoostClassifier(random_state=42) 
@@ -76,7 +77,6 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     classifier_list.append(dt)
     classifier_list.append(voting_clf)
 
-    #TODO: Add steps to this pipeline for what we want to have
     #define the pipeline
     pipeline = Pipeline(steps=[
         ('classifier', VotingClassifier(
@@ -91,7 +91,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     y_train_predictions = pipeline.predict(X_train_scaled)
     y_test_predictions = pipeline.predict(X_test_scaled)
 
-    st.write("\n\n")  
+    st.write(" \n \n")  
     voting_class_name = "Voting Classifier Scoring"
     st.write(f"##### **{voting_class_name}**")
     st.write(f"""| Type of Data Set    | Accuracy | Balanced Accuracy |
@@ -189,7 +189,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     # Now the classification matrix for each model
     st.write("#### Classification Matrix for each model")
     for clf in classifier_list:
-        st.write(f"##### Classification Matrix for model {clf.__class__.__name__}")
+        
         clf.fit(X_train_scaled, y_train)
         y_train_predictions = clf.predict(X_train_scaled)
         y_test_predictions = clf.predict(X_test_scaled)
@@ -197,6 +197,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
         class_report_train = classification_report(y_train, y_train_predictions)
         class_report_test = classification_report(y_test, y_test_predictions)
         # Now write it out
+        st.text("\n \n")
         st.write(f"##### **Model {clf.__class__.__name__} Training Classification Report**")
         st.text(f"\n{class_report_train}\n\n")
         st.write(f"##### **Model {clf.__class__.__name__} TEST Classification Report**")

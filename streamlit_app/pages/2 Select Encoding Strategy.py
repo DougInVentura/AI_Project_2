@@ -72,11 +72,11 @@ if (('Ready_for_Use_Encoding' not in st.session_state or st.session_state['Ready
         df_column_actions = pd.DataFrame({'column_names':X_in_process_df.columns,'the_types':X_in_process_df.dtypes, "encode_num":default_encoding_list}).sort_values(by = 'the_types').reset_index(drop=True)
         df_column_actions['ordinal_order'] = str(np.NaN)
         # Now set up the instructions for specifying the Encoding
-        st.write("""For each column name, enter one of the following in the Encoded_Num field...\n 
-1  for  'One Hot Encoding'
-2  for  'Label Encoding'
-3  for  'Ordinal Encoding' or
-4  for  'Numeric Scaling only' 
+        st.write("""##### **For each column name, enter one of the following in the Encoded_Num field...** \n 
+**1**  for  'One Hot Encoding' \n
+**2**  for  'Label Encoding' \n
+**3**  for  'Ordinal Encoding' or \n
+**4**  for  'Numeric Scaling only' \n
 For Ordinal Encoding, must also specify Ordinal Order **for each category** based on the unique entries (use popover button to view Unique column values""")
 
         with st.popover("Open Column Value Count Window"):
