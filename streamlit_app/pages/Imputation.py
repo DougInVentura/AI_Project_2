@@ -13,21 +13,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pandas.api.types as pd_api_types
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler, add_dummy_feature, LabelEncoder, OrdinalEncoder
-from sklearn.compose import ColumnTransformer
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier, GradientBoostingClassifier, AdaBoostClassifier
-from sklearn.svm import SVC
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, balanced_accuracy_score
-
-import json
-import os
-import datetime
-import pdb
 
 # ------------------------------------------------------------
 # this app uses 'Streamlit' for simple web development.
@@ -40,7 +25,6 @@ CUSTOM_VALUE = 4
 
 #Default Imputation 1 = drop_na
 DEFAULT_IMPUTATION_VALUE = DROP_NA
-
 
 st.set_page_config(
     layout="wide",
@@ -104,8 +88,6 @@ def impute_data(x_data, x_train, impute_strategy_dict, custom_value_dict):
             x_data = x_data.dropna(subset=[col])
     return x_data
 
-        
-
 if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_loaded']):
     print("train test loaded")
 
@@ -121,7 +103,6 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
     else: 
         print('X_test does not exist')
    
-
     #show the dataframe
     st.dataframe(x_train.head(7))
 
@@ -171,10 +152,8 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
             'column_names':x_train.columns,
             'mode_values':mode_list
         })
-        #test_mode_df = x_train.mode()
         st.dataframe(mode_df)
         
-
     #set up the data editor with the imputing dictionary
     edited_df = st.data_editor(df_column_actions)
         
@@ -184,22 +163,12 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
 
         with st.popover("Open impute strategy dict"):
             impute_dict_df = pd.DataFrame(impute_strategy_dict, index=[0])
-            #impute_dict_df = pd.DataFrame({
-                #'keys':impute_strategy_dict.keys,
-                #'values':impute_strategy_dict.values
-           # })
             st.dataframe(impute_dict_df)
         
         with st.popover("Open custom value dict"):
             custom_value_dict_df = pd.DataFrame(custom_value_dict, index=[0])
-           #custom_value_dict_df = pd.DataFrame({
-            #    'keys':custom_value_dict.keys,
-             #   'values':custom_value_dict.values
-            #})
             st.dataframe(custom_value_dict_df)
     
-
-        
         x_train_imputed = impute_data(x_data=x_train, x_train=x_train, impute_strategy_dict=impute_strategy_dict, custom_value_dict=custom_value_dict)
         x_test_imputed = impute_data(x_data=x_test, x_train=x_train, impute_strategy_dict=impute_strategy_dict, custom_value_dict=custom_value_dict)
 
