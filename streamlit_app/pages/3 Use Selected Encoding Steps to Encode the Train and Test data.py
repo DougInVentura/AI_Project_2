@@ -46,10 +46,13 @@ def do_OHE_encoding(X_train, X_test, column_list):
 # ----------------------------------------------------------------------------------------------------------
 def do_Ordinal_Encoding(X_train, X_test,column_list, encoding_dict):
     '''
-    Does ordinal encoding for specified columns.
-    Arguments: df -> this is the entire dataframe you are encoding
-             : column_list -> these are columns you want to do Ordinal Encoding
-    Returns: encoded dataframe where Ordinal Encoding applied to each column
+    Function performs ordinal encoding for specified columns.
+    Arguments: X_train and X_test: These are the dataframe you are ordinal encoding.
+             - Column_list: These are columns you want to implement Ordinal Encoding
+             - Encoding_Dict: Has the encoding labels and encoding order of those lables which were generated under 'Select Encoding Strategy'. 
+    Internal Note: X_train[column_list] and the same for X_test is the subset of the dataframe that Ordinal Encoding is specified for.
+             - The returned dataframe, X_train_converted, X_test_converted, have only those columns as required.
+    Returns: X_train_converted, X_test_converted. 
     Internal Notes: In a loop, displays each column name and unique values. User input is the order of the unique values, which is needed to do Ord Encoding correctly.
     '''
     
@@ -58,7 +61,7 @@ def do_Ordinal_Encoding(X_train, X_test,column_list, encoding_dict):
     X_test_converted = X_test[column_list].copy()
     
     for i, the_col in enumerate(column_list):
-        uniq_levels = X_train[the_col].unique()
+        uniq_levels = encoding_dict['ord_levels_for_col'][i][the_col]
         # the encoding_dict has the Ordinal encoding order for each affected column. Get it, sort the category string and set up to use pd.Categorical to encode the column.
         order_str = encoding_dict['ord_order_list'][i][the_col]
         order_list = order_str.split()
@@ -80,7 +83,7 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     '''
     Funtion orchestrates encoding using OHE, Label Encoding, Ordinal Encoding and finally all columns go through Standard Scaling
     Arguments   : X_train, X_test: This is the dataframe to encode
-                : 
+                - endcoding_dict has the specification for performing the encoding. See "Select Encoding Strategy.py" for details.
     '''
     # st.write(f"top of encode_X_train_test.  encoding_dict is: {encoding_dict}")
     X_train_frames = []  # in the end, individual data frames for OHE, Lab Encoding, Ord Encoding and Standard Scaping are appended to frames for column merging using pd.concat
@@ -122,19 +125,21 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
                     X_test_frames.append(X_test_to_only_scale)
                 case 'max_categories_OHE':
                     message = 'do nothing. not in use'
-                case 'current_date_time':
+                case 'current_date_time' | 'ord_order_list' | 'ord_levels_for_col' | 'which_encoding_list':
                     message = 'do nothing. not in use'
                 case _:
-                    st.text(f"reached case_ in encode_X_train_test. the_key is: {the_key}")
+                    st.text(f"Reached case _ in encode_X_train_test. the_key is: {the_key}")
             
     # we now have all of the encoding pieces of the dataframe. they are in the 'frames' list. Concat and apply standard scaler
     X_train_to_scale = pd.concat(X_train_frames, axis = 1)
     X_test_to_scale = pd.concat(X_test_frames, axis = 1)
-    st.write("X_train to scale created. Shown below... Also archived in data dir as X_train_before_scaling.csv")
+    st.write("#### **X_train_to_scale**  - Training data after encoding but prior to scaling")
+    st.write("Saved in data\X_train_before_scaling.csv")
     st.dataframe(X_train_to_scale)
     X_train_to_scale.to_csv("data/X_train_before_scaling.csv")
     # Now do the X_test_to_scale
-    st.write("X_test to scale created. Shown below... Also archived in data dir as X_test_before_scaling.csv")
+    st.write("#### **X_test_to_scale**  - Test data after encoding but prior to scaling")
+    st.write("Saved in data\X_test_before_scaling.csv")
     st.dataframe(X_test_to_scale)
     X_train_to_scale.to_csv("data/X_test_before_scaling.csv")
 
@@ -143,12 +148,14 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
     X_train_scaled_array = scaler.fit_transform(X_train_to_scale)
     X_test_scaled_array = scaler.transform(X_test_to_scale)
     # scaler returns numpy array. Convert to dataframe
-    pdb.set_trace()
     X_train_scaled_df = pd.DataFrame(X_train_scaled_array, columns = X_train_to_scale.columns)
     X_test_scaled_df = pd.DataFrame(X_test_scaled_array, columns = X_test_to_scale.columns)
-    st.text("X_train_scaled dataframe...")
+    st.write("#### **X_train_scaled** - Training data after encoding and scaling")
+    st.write("Saved in data\X_train_scaled_df.csv")
     st.dataframe(X_train_scaled_df)
-    st.text("X_test_scaled dataframe...")
+
+    st.write("#### **X_test_scaled** - Test data after encoding and scaling")
+    st.write("Saved in data\X_test_scaled_df.csv")
     st.dataframe(X_test_scaled_df)
     X_train_scaled_df.to_csv("data/X_train_scaled_df.csv", index = False)
     X_test_scaled_df.to_csv("data/X_test_scaled_df.csv", index = False)
@@ -167,9 +174,15 @@ if ('df_loaded' in st.session_state) and ('Encoding_Dict_Ready' in st.session_st
     encoding_dict = st.session_state["encoding_dict"]
     
     X_train_scaled, X_test_scaled = encode_X_train_test(X_train, X_test, encoding_dict)
+
     st.session_state['are_X_frames__scaled'] = True
     st.session_state['X_train_scaled'] = X_train_scaled
     st.session_state['X_test_scaled'] = X_test_scaled
-    st.write("**Ready to 'Run and Score Models'**")
+    st.write("##### **Ready_to_Run_and_Score** ")
+    st.session_state["Ready_to_Run_and_Score"] = True
 else:
     st.write("Go back to 'Select Encoding Strategy' to select dataframe and build encoding dictionary")
+
+if 'Ready_to_Run_and_Score' in st.session_state and st.session_state["Ready_to_Run_and_Score"]:
+    if st.button(":blue[Click Here] to go to Run and Score Models"):
+        st.switch_page("pages/4 Run and Score Models.py")

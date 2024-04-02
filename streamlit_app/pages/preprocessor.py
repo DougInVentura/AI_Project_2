@@ -91,10 +91,7 @@ and finally, perform mapping""")
     )
     
 
-    if st.button("Fill out instruction table, then Press Here when complete"):
-        st.write("Examining instruction table")
-        # if any of the drop column has values, the loop through and drop those columns
-        st.dataframe(edited_instr_df)
+    if st.button("Fill out instruction table, then :blue[Click] when complete"):
         drop_col = []
         consolidate_catgegories = []
         perform_mapping_list = []
@@ -118,19 +115,32 @@ and finally, perform mapping""")
         # start with delete
         if len(drop_col) > 0:
             X_in_process_df = X_in_process_df.drop(columns = drop_col)
-            st.write('after drop')
+            st.write('#### **After column drop(s)**')
         else:
-            st.write('no columns to drop in X dataframe')
-        st.dataframe(X_in_process_df)
+            st.write('#### **No columns to drop in X dataframe**')
+        col1, col2 = st.columns([1,3])
+        with col1:
+            st.write("#### **y dataframe**")
+            st.dataframe(y_df)
+        with col2:
+            st.write("#### **X dataframe**")
+            st.dataframe(X_in_process_df)
+            
         st.session_state['X_in_process_df'] = X_in_process_df
-        if 'dir_and_X_IN_PROCESS_fname' in st.session_state:  #zzz
+        if 'dir_and_X_IN_PROCESS_fname' in st.session_state:  
             dir_and_X_IN_PROCESS_fname = st.session_state['dir_and_X_IN_PROCESS_fname']
             X_in_process_df.to_csv(dir_and_X_IN_PROCESS_fname, index = False)
         else:
             st.write("dir and file name was not passed from 'Select data file...'. Using data\X_temp.csv instead")
             X_in_process_df.to_csv("data/temp.csv", index = False)
+        st.write(f"Preprocessing has been completed.")
+        st.session_state['Preprocessing_complete'] = True
 else:
     st.write("Go back to 'Select Data File...'.  Nothing is loaded")
+
+if 'Preprocessing_complete' in st.session_state and st.session_state['Preprocessing_complete']:
+    if st.button("Preprocessing is complete. :blue[Click here] to goto 'Select Encoding Strategy"):
+        st.switch_page("pages/2 Select Encoding Strategy.py")
 
 
   
