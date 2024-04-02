@@ -95,13 +95,13 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
         x_train = st.session_state['X_train']
         print("got xtrain")
     else: 
-        print('X_train does not exist')
+        st.write('X_train does not exist')
 
     if 'X_test' in st.session_state:
         x_test = st.session_state['X_test']
         print("got xtest")
     else: 
-        print('X_test does not exist')
+        st.write('X_test does not exist')
    
     #show the dataframe
     st.dataframe(x_train.head(7))
@@ -185,3 +185,7 @@ if ('train_test_loaded' in st.session_state) and (st.session_state['train_test_l
         st.session_state['x_test_imputed'] = x_test_imputed
 
         st.write("All done imputing go to 'Use Selected Encoding Steps'")
+
+    if 'is_imputation_complete' in st.session_state and st.session_state["is_imputation_complete"]:
+        if st.button(":blue[Click Here] to go to Use Selected Encoding Steps"):
+            st.switch_page("pages/3 Use Selected Encoding Steps to Encode the Train and Test data.py")
