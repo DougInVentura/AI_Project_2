@@ -9,7 +9,7 @@ from tkinter import SE
 from flask import render_template, request, session, send_file, send_from_directory
 from flask.helpers import redirect
 from Best_Model import app
-from Models.tpot import evaluate_tpot, load_results
+from Models.tpot import evaluate_tpot
 from Utilities.utils import get_columns, load_settings, save_settings
 
 @app.route('/')
@@ -160,7 +160,7 @@ def tpot_process():
          y = session['fieldSelected']
  
     # Evaluate the TPOT model
-    results = evaluate_tpot(selectedFile, app.config['PLOT_FOLDER'], y)
+    results = evaluate_tpot(selectedFile, app.config['PLOT_SAVE_FOLDER'], y)
     
     # Save the results in the session
     session["MODEL_RESULTS"] = results
@@ -189,6 +189,10 @@ def tpot_process():
 @app.route('/display_graph', methods=['POST'])
 def display_graph():
     
+    # Set the plot type to 'bar' until the UI is changed to support 'line'
+    plot_type = 'bar'
+    
+
     # Get the selected field from the form
     selected_feature = request.form.get('dropdown')
     
@@ -219,14 +223,36 @@ def display_graph():
     #plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
     #plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.html")
     
-    #new_folder = f"file:///D:/ASU/homework/Project2/WebSite/Best_Model/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    new_folder = f"file:///D:/ASU/homework/Project2/WebSite/Best_Model/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
+
+    
+    # don't hardcode new_folder = f"file:///D:/ASU/homework/Project2/WebSite/Best_Model/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
+    # new_folder = f"file:///{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
+    # new_folder = f"{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
+    # new_folder = f"{current_directory}/{app.config['PLOT_FOLDER']}"
+    new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}TPOT/"
     plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.png")
+    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}_{plot_type}.png")
 
     form_data = {'image_file': plot_filename, 'model_name':'TPOT'}
     return render_template('graph.html', title='Graph', data=form_data)
+
     
+"""
+{{ url_for('static', filename=image_name) }}
+This displays the image but it's not a web page.  Can't even hit back without confirming page refresh
+    current_directory = os.getcwd()
+    new_folder = f"{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
+    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
+    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.png")
+
+    # form_data = {'image_file': plot_filename, 'model_name':'TPOT'}
+    # return render_template('graph.html', title='Graph', data=form_data)
+    return send_file(plot_filename, mimetype='image/png')
+    
+    HTMLPage code
+    <img src="{{ url_for('display_image') }}" alt="Dynamic Image">
+"""
+
 @app.route('/return_to_model_page', methods=['POST'])
 def return_to_model_page():
    model_page = session['MODEL_PAGE']
@@ -234,6 +260,9 @@ def return_to_model_page():
    # Need to retrieve data from session so you don't have to reprocess
    # when navigating back to the model processing page before selecting
    # a different feature to graph.
+
+   #retroeve the Y value from the session
+   y = session['fieldSelected']
 
    # Get the selected file from the session
    selectedFile = session['selectedFile']

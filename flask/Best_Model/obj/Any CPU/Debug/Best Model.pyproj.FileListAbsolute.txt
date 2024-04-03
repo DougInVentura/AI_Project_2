@@ -1,2 +1,3 @@
 D:\ASU\homework\Project 2\WebSite\Best Model\obj\Any CPU\Debug\Best Model.pyproj.CoreCompileInputs.cache
 D:\ASU\homework\Project2\WebSite\Best_Model\obj\Any CPU\Debug\Best Model.pyproj.CoreCompileInputs.cache
+D:\ASU\homework\AI_Project_2\AI_Project_2\flask\Best_Model\obj\Any CPU\Debug\Best Model.pyproj.CoreCompileInputs.cache

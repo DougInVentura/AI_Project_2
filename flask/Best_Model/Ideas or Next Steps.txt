@@ -1,3 +1,9 @@
+TODO
+	Check workding in UI
+	Add H20 AutoML model
+	Need to improve plots - they don't look right
+	Add Confusion Matrix plot
+
 UI Enhancement to support more models.
   The current template is limited to 3 models using the small boxes at the bottom of the page.
   Alter the UI to show a dropdown list of the models that can be selected. These models could be easily added to a table.
