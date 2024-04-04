@@ -38,3 +38,4 @@ Remaining Tasks:
 * Readme updates per description above
 * Practice presentations
 * David - presentation power point draft for us to review on Wednesday
+* David to add two more more models

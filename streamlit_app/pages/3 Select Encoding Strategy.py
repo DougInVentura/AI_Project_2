@@ -58,7 +58,7 @@ def get_default_encode_num(df):
     return encode_list
 
 if (('Ready_for_Imputation' not in st.session_state or st.session_state['Ready_for_Imputation'] == False)):
-    if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
+    if ('Preprocessing_complete' in st.session_state) and st.session_state['Preprocessing_complete'] and ('X_in_process_df' in st.session_state):
         st.session_state['Ready_for_Imputation'] = False  # at end of this block if all successful, then it becomes true
         df_initial = st.session_state['df_initial']
         X_in_process_df = st.session_state['X_in_process_df']
@@ -123,7 +123,7 @@ For Ordinal Encoding, must also specify Ordinal Order **for each category** base
                     case 3:
                         OrdE.append(the_col)
                         ord_order_list.append({the_col:ord_order})
-                        ord_levels_for_col.append({the_col:list(X_in_process_df[the_col].unique())})
+                        ord_levels_for_col.append({the_col:list(X_in_process_df[the_col].dropna().unique())})
                     case 4:
                         NS.append(the_col)
                     case _:

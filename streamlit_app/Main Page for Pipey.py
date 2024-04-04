@@ -7,15 +7,14 @@ st.set_page_config(
 )
 
 st.write("""# 👋 Welcome to Pipey 👋
-### Web-Based Supervised Machine Learning Classification Processor
+### Web-Based Application to Automate Supervised Machine Learning Classification Processing
 #### With Preprocessing, Encoding, Imputation, Model Building and Scoring
-### Project 2 ASU AI Course: Cody, Doug, David
+### Project 2 ASU AI Course: Cody Cushing, David Gerhart, and Doug Francis
          
-##### Version 0.2a """)
+##### Version 1.0a """)
 
-st.sidebar.success("Select a page to continue")
 
-if st.button(":blue[Click Here] to select a csv file with your data"):
+if st.button(":blue[Click Here] to select a csv file with your data to begin"):
     st.switch_page("pages/1 Select data file and init proc.py")
 
 

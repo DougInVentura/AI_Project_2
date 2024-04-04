@@ -65,6 +65,7 @@ def do_Ordinal_Encoding(X_train, X_test,column_list, encoding_dict):
         # the encoding_dict has the Ordinal encoding order for each affected column. Get it, sort the category string and set up to use pd.Categorical to encode the column.
         order_str = encoding_dict['ord_order_list'][i][the_col]
         order_list = order_str.split()
+       
         ord_df = pd.DataFrame({'categories':uniq_levels,'the_order':order_list})
         ord_sorted_df = ord_df.sort_values(by='the_order').reset_index(drop=True)
         ord_sorted_list = ord_sorted_df['categories'].to_list()
@@ -164,9 +165,12 @@ def encode_X_train_test(X_train, X_test, encoding_dict):
 # ----------- MAIN   MAIN   MAIN ----------------------------------------
 
 if ('df_loaded' in st.session_state) and ('Encoding_Dict_Ready' in st.session_state) and 'train_test_loaded' in st.session_state \
-        and st.session_state["df_loaded"] and st.session_state['Encoding_Dict_Ready'] and st.session_state['train_test_loaded']:
-    X_train = st.session_state['X_train']
-    X_test = st.session_state['X_test']
+        and st.session_state["df_loaded"] and st.session_state['Encoding_Dict_Ready'] and st.session_state['train_test_loaded'] and ('is_imputation_complete' in st.session_state) \
+        and st.session_state['is_imputation_complete']:
+    X_train = st.session_state['x_train_imputed']
+    st.write("checking X_train... is it imputed?")
+    st.dataframe(X_train)
+    X_test = st.session_state['x_test_imputed']
     y_train = st.session_state['y_train']
     y_test = st.session_state['y_test']
     st.write("Dataframe and Encoding Dictionary are Loaded... Proceeding")

@@ -16,13 +16,30 @@ st.write("""## 👋 **Dataframe Preprocessor Page** 👋
 ### Supervised Machine Learning Classification preprocessing, encoding and model building and scoring)""")
 
 # --------  Functions  ----------------------------------------------------
-def do_consolidate_categories(X_df):
-    st.write('write this function')
+def do_category_consolidation(df, max_cat_dict):
+    st.write('in do_cateogory_consolidation')
     st.session_state['Consolidating_Categories'] = True
-    # define an editable dataframe w column number and max categies for Object columns
-    return False
-
-    return True
+    for the_col in max_cat_dict:
+        name_of_other = max_cat_dict[the_col][0]
+        max_categories = max_cat_dict[the_col][1]
+        # print(f"{the_col:25} -> {name_of_other:20}     {max_categories}    type of max_cat: {type(max_categories)}")
+        df_cat = df[[the_col]].groupby(the_col).size().reset_index(name='counts').sort_values(by='counts', ascending=False)
+        df_cat = df_cat.reset_index(drop=True)
+        # print("df cat head is below")
+        # print(df_cat.head(10))
+        mapping = {}
+        # print("----- Detail for the column")
+        print("for column: ",the_col)
+        for i, row in df_cat.iterrows():
+            # print(f"i={i}  level: {row[0]} and row[count]: {row[1]}")
+            if i > max_categories - 1:
+                mapping[row[0]] = name_of_other
+            else:
+                mapping[row[0]] = row[0]
+        print(f"mapping dir for {the_col}: \n {mapping}")
+        df[the_col] = df[the_col].map(mapping)
+        print(f"in consolidate categories, df after processing is: \ndf.head(40)")
+        return df
 
 # -------- Main Main  Main ------------------------------------------------
 
@@ -62,6 +79,7 @@ if ('df_loaded' in st.session_state) and (st.session_state.df_loaded):
     st.markdown("")       
     st.write("""Order of actions: 1) Drop columns, 2) Category Consolidation (implement max categories). 3) Name consolidated categories (Name_for_Other)
 and finally, perform mapping""")
+    
     with st.popover("Click for value counts of the columns"):
         st.markdown("Value Counts for the Columns... 👋")
         for the_col in X_in_process_df.columns:
@@ -111,10 +129,19 @@ and finally, perform mapping""")
                 perform_mapping = the_row['Perform_Mapping']
                 if perform_mapping:
                     perform_mapping_list.append(the_row['Column'])
+                    st.write("##### Performing mapping has not been implemented")
+        # now implement the max categories
+        if len(consolidate_catgegories) >= 1:
+            st.text(f"consol cat dict is: \n {consolidate_catgegories}")
+            X_in_process_df = do_category_consolidation(X_in_process_df, consolidate_catgegories)
+            st.session_state['X_in_process_df'] = X_in_process_df
+            st.write("after consolidate categories, the dataframe is...")
+            st.dataframe(X_in_process_df)
         # Past looping over the rows. we have the lists for dropping, consolidating catefgoreies, and mapping
         # start with delete
         if len(drop_col) > 0:
             X_in_process_df = X_in_process_df.drop(columns = drop_col)
+            st.session_state['X_in_process_df'] = X_in_process_df
             st.write('#### **After column drop(s)**')
         else:
             st.write('#### **No columns to drop in X dataframe**')
