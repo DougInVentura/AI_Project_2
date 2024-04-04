@@ -9,6 +9,7 @@ st.set_page_config(
 st.write("""# 👋 Welcome to Pipey 👋
 ### Web-Based Application to Automate Supervised Machine Learning Classification Processing
 #### With Preprocessing, Encoding, Imputation, Model Building and Scoring
+#### Also includes Exploratory Data Analysis
 ### Project 2 ASU AI Course: Cody Cushing, David Gerhart, and Doug Francis
          
 ##### Version 1.0a """)

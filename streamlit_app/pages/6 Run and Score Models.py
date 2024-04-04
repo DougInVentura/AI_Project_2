@@ -50,7 +50,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     #Define/select which classifiers to use (For now just use the ones below)  
     lr = LogisticRegression(random_state=42)
     rf = RandomForestClassifier(random_state=42, max_depth=max_depth_try)
-    # for model scoring we implemented with svc, must use linear kernel
+    # for model scoring we implemented with SVM, must use linear kernel
     svc = SVC(probability=True, kernel='linear',random_state=42)
     gbc = GradientBoostingClassifier(random_state=42)
     abc = AdaBoostClassifier(random_state=42) 
@@ -206,7 +206,7 @@ if ('Ready_to_Run_and_Score' in st.session_state) and (st.session_state['Ready_t
     st.write("#### Feature Importance for each model")
     
     for clf in classifier_list:
-        if clf.__class__.__name__ in {'LogisticRegression','SVC'}:
+        if clf.__class__.__name__ in {'LogisticRegression','SVM', 'SVC'}:
             # for linear models, use coef_ for feature imporance
             importances = clf.coef_[0]
         if clf.__class__.__name__ in {'RandomForestClassifier','GradientBoostingClassifier','AdaBoostClassifier','DecisionTreeClassifier'}:
