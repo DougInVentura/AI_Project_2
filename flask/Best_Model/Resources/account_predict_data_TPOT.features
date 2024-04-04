@@ -7,13 +7,10 @@ internet_min
 phone_monthly_charges
 internet_monthly_charges
 avg_monthly_bill
-trigger_point
-churn_surv
 trigger_price
 trigger_quality
 trigger_external
 cluster
-churn_after_treatment
 gender_Female
 gender_Male
 contract_duration_long-term
