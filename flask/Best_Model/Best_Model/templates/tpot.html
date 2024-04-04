@@ -50,21 +50,30 @@
     </div>
     <div class="col-md-4">
         <h2>Visual Represtations </h2>
-        <form method="POST" action="/display_graph" enctype="multipart/form-data">
+        <p>Below are visual representations of the data:</p>
+        <form method="POST" action="/confusion_matrix" enctype="multipart/form-data">
             {% if data %}
-                <h3>Please select the field to see how it impacted {{ data.selectedY }}'</h3>
-                <select name="dropdown">
-                    {% for option in data.key_features %}
-                        <option value="{{ option }}">{{ option }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                <input class="btn btn-default" type="submit" value="Show Graph">
+                <input class="btn btn-default" type="submit" value="Show Confusion Matrix">
             {% else %}
                 <p></p>
             {% endif %}
         </form>
-        <p></p>
-    </div>        
+
+        <form method="POST" action="/display_graph" enctype="multipart/form-data">
+            {% if data %}
+            <h3>Please select the field to see how it impacted {{ data.selectedY }}'</h3>
+            <select name="dropdown">
+                {% for option in data.key_features %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input class="btn btn-default" type="submit" value="Show Graph">
+            {% else %}
+                <p></p>
+            {% endif %}
+        </form>
+            <p></p>
+</div>        
 </div>
 {% endblock %}

@@ -24,7 +24,11 @@ def optimize_pipeline(X_train, y_train):
     return tpot
 
 # Main function
-def evaluate_tpot(filename, plot_folder, y_field):
+# Filename - data flie to be used
+# Root folder for where plots will be saved
+# y_field - the field to predict
+# overwrite - if true, will overwrite existing plots (Used to force creation of new plots when the user has uploaded a newer version of the data file)
+def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwrite = False):
     
     step = 1
     key_features = ''
@@ -86,14 +90,20 @@ def evaluate_tpot(filename, plot_folder, y_field):
         step = 12
         accuracy = evaluate_model(y_test, y_pred)
         
-        # Create interactive plot and save it to a file
+       
         step = 13
         
+        # Add the predicted and Y values to the dataframe
+        dataframe = pd.DataFrame(X_test)
         predicted_field = y_field + '_predicted'
-        X_test[predicted_field] = y_pred
-
+        dataframe[predicted_field] = y_pred
+        dataframe[y_field] = y_test   
+      
+        #Set overwrite to true while working to improve graphs
+        overwrite = True
+        
         # Create a plot vs. y_field for each of the key features or X columns
-        save_plots(filename,  model_name, ['bar', 'line'], plot_folder, X_test, key_features, predicted_field)
+        save_plots(filename,  model_name, ['bar', 'line'], plot_folder, dataframe, key_features, predicted_field, y_field, overwrite)
     
         step = -1
         return {'error':step, 'accuracy': accuracy, 'key_features':key_features, 'model_file':model_file }

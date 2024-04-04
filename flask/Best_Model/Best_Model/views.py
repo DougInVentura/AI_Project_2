@@ -173,7 +173,7 @@ def tpot_process():
     key_features = [feature for feature in key_features if 'uuid' not in feature]
     
     # Format key features for display
-    key_features = "\n\r".join(key_features)     
+    # key_features_formatted = "\n\r".join(key_features)     
     # <br> doesn't work key_features = "<br>".join(key_features)   
    
     error = results['error']
@@ -183,9 +183,24 @@ def tpot_process():
     session['MODEL_PAGE'] = 'tpot.html'
     
     #Display the results in the tpot page
-    form_data = {'selectedFile': selectedFile, 'accuracy':accuracy, 'selectedY':y, 'key_features_list':results['key_features'], 'key_features':results['key_features']}
+    form_data = {'selectedFile': selectedFile, 'accuracy':accuracy, 'selectedY':y, 'key_features_list':key_features, 'key_features':key_features}
     return render_template('tpot.html', title='TPOT', data=form_data)
 
+@app.route('/confusion_matrix', methods=['POST'])
+def display_confusion_matrix():
+        
+        
+    selectedFile = session['selectedFile']
+        
+    new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}TPOT/"
+    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
+    plot_filename = plot_filename.replace('.csv', "_confusion_matrix.png")
+
+        
+    # Open html file
+    form_data = {'image_file': plot_filename, 'model_name':'TPOT'}
+    return render_template('graph.html', title='Graph', data=form_data)
+        
 @app.route('/display_graph', methods=['POST'])
 def display_graph():
     
