@@ -9,7 +9,7 @@ from tkinter import SE
 from flask import render_template, request, session, send_file, send_from_directory
 from flask.helpers import redirect
 from Best_Model import app
-from Models.tpot import evaluate_tpot
+from Models.tpot import train_tpot, predict_tpot
 from Utilities.utils import get_columns, load_settings, save_settings
 
 @app.route('/')
@@ -47,9 +47,14 @@ def about():
 @app.route('/select_file')
 def select_file():
     """
-    select_file.html
-    Renders the select file page.
+    Customer needs to select the training file to be used for the model.
     """
+    
+    # Set the file type to TRAIN
+    session['file_type'] = 'TRAIN'
+    # Need to refactor the page so passing data doesn't make it thing a file has already been selected.
+    # Will have to implement production file evaluation after project is submitted.
+    # return render_template('select_file.html', data=session['file_type'])
     return render_template('select_file.html')
 
 
@@ -78,7 +83,7 @@ def file_chosen():
     filename = os.path.join(app.config['UPLOAD_FOLDER'], selectedFile.filename)
     
     # Save the selected file to the session
-    session['selectedFile'] = filename
+    session['train_file'] = filename
     
     # Call the method that uploads the file (overwrites what is there)
     # TODO:
@@ -109,11 +114,11 @@ def field_selected():
     # Save the selected field in the session
     session['fieldSelected'] = fieldSelected
     
-    fileName = session['selectedFile']
+    fileName = session['train_file']
     save_settings(fileName, fieldSelected);
     
     # Package the data for sending to the index.html page
-    data = {'fieldSelected': fieldSelected, 'selectedFile':session['selectedFile']}
+    data = {'fieldSelected': fieldSelected, 'selectedFile':session['train_file']}
     return render_template('index.html', data=data)
  
 
@@ -142,6 +147,12 @@ def upload(selectedFile):
 def tpot():
     return render_template('tpot.html')
 
+@app.route('/select_production_file', methods=['POST'])
+def tpot_production_file():
+    session['file_type'] = 'PRODUCTION'
+        
+    return render_template('select_file.html', data=session['file_type'])
+    
 @app.route('/tpot_process', methods=['POST'])
 def tpot_process():
     """
@@ -152,15 +163,15 @@ def tpot_process():
     #   Accuracy
     #   Interactive Plot
     #   Should save other results to a file for later review as well
-    selectedFile = session['selectedFile']
+    selectedFile = session['train_file']
     
     #retroeve the Y value from the session
     y = load_settings(selectedFile)
     if(y == ''):
          y = session['fieldSelected']
  
-    # Evaluate the TPOT model
-    results = evaluate_tpot(selectedFile, app.config['PLOT_SAVE_FOLDER'], y)
+    # Evaluate the TPOT model using train and test data
+    results = train_tpot(selectedFile, app.config['PLOT_SAVE_FOLDER'], y)
     
     # Save the results in the session
     session["MODEL_RESULTS"] = results
@@ -188,13 +199,13 @@ def tpot_process():
 
 @app.route('/confusion_matrix', methods=['POST'])
 def display_confusion_matrix():
+    prod_or_train = 'train'
         
-        
-    selectedFile = session['selectedFile']
+    selectedFile = session['train_file']
         
     new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}TPOT/"
     plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    plot_filename = plot_filename.replace('.csv', "_confusion_matrix.png")
+    plot_filename = plot_filename.replace('.csv', f"_{prod_or_train}_confusion_matrix.png")
 
         
     # Open html file
@@ -204,70 +215,28 @@ def display_confusion_matrix():
 @app.route('/display_graph', methods=['POST'])
 def display_graph():
     
-    # Set the plot type to 'bar' until the UI is changed to support 'line'
-    plot_type = 'bar'
+    prod_or_train = 'train'
     
-
+   
+    # Find out what type of graph they want
+    plot_type = request.form.get('graph_type', None)
+    
     # Get the selected field from the form
     selected_feature = request.form.get('dropdown')
     
     # Get the selected file from the session
-    selectedFile = session['selectedFile']
+    selectedFile = session['train_file']
     
-    """
-    # This code will open the html file but doesn't provide a way to navigate back to the tpot page
-    # use this only if you cant get the graph to display in the a page using an iframe that provides a way to navigate back to the tpot page
-    #build the plot file name from feature selected
-    new_folder = f"D:/ASU/homework/Project 2/WebSite/Best Model/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.html")
-   
-    
-    directory = os.path.dirname(plot_filename) 
-    plot_filename = os.path.basename(plot_filename) 
-    return send_from_directory(directory, plot_filename)
-    """
-    
-    # Open html file
-    # TODO: Change this to render the html on a template page using an iframe
-    # this will allow the user to see the plot but the template page will provide
-    # navigation back to the tpot page.
-    
-    #build the plot file name from feature selected
-    #new_folder = f"{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    #plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    #plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.html")
-    
-
-    
-    # don't hardcode new_folder = f"file:///D:/ASU/homework/Project2/WebSite/Best_Model/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    # new_folder = f"file:///{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    # new_folder = f"{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    # new_folder = f"{current_directory}/{app.config['PLOT_FOLDER']}"
+    # Build the plot filename
     new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}TPOT/"
     plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}_{plot_type}.png")
+    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}_{prod_or_train}_{plot_type}.png")
 
+    # Set data to be returned to the form
     form_data = {'image_file': plot_filename, 'model_name':'TPOT'}
     return render_template('graph.html', title='Graph', data=form_data)
 
     
-"""
-{{ url_for('static', filename=image_name) }}
-This displays the image but it's not a web page.  Can't even hit back without confirming page refresh
-    current_directory = os.getcwd()
-    new_folder = f"{current_directory}/{os.path.split(selectedFile)[0]}/{app.config['PLOT_FOLDER']}"
-    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
-    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}.png")
-
-    # form_data = {'image_file': plot_filename, 'model_name':'TPOT'}
-    # return render_template('graph.html', title='Graph', data=form_data)
-    return send_file(plot_filename, mimetype='image/png')
-    
-    HTMLPage code
-    <img src="{{ url_for('display_image') }}" alt="Dynamic Image">
-"""
-
 @app.route('/return_to_model_page', methods=['POST'])
 def return_to_model_page():
    model_page = session['MODEL_PAGE']
@@ -280,7 +249,7 @@ def return_to_model_page():
    y = session['fieldSelected']
 
    # Get the selected file from the session
-   selectedFile = session['selectedFile']
+   selectedFile = session['train_file']
    
    # retrieve model processing results from the session
    # Get the accuracy and key features from the results

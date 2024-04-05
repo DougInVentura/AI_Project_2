@@ -161,8 +161,11 @@ def load_keyfeatures(filename):
     
     return fiels_list
 
+def predict_automl(filename, y_field, plot_folder):
+    return
+
 # Main function
-def evaluate_tpot(filename, plot_folder, y_field):
+def train_automl(filename, plot_folder, y_field):
     
     step = 1
     key_features = ''
