@@ -8,171 +8,44 @@ import matplotlib.pyplot as plt
 from joblib import dump, load
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from Models.model import load_data, load_results, get_key_features, clean_data, create_X_y, split_data, predict_target, evaluate_model, save_model, save_keyfeatures, load_keyfeatures, save_plots
 
 # import autosklearn.classification
-from tpot import TPOTClassifier
-
-# Load the data
-def load_data(filename):
-    df = pd.read_csv(filename)
-    return df
-
-# clean the dat
-def clean_data(df):
-    df.dropna(inplace=True)
-    df = pd.get_dummies(df, drop_first=False)
-    return df
-
-# create X and y
-def create_X_y(df, y_field):
-    y = df[y_field]
-    X = df.drop(columns=[y_field])
-    return X, y
-
-# split the data
-def split_data(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
-    return X_train, X_test, y_train, y_test
-
+import h2o
+from h2o.automl import H2OAutoML
 
 # Initialize TPOT and let it optimize the ML pipeline
-def optimize_pipeline(X_train, y_train):
+def optimize_pipeline(data, x, y):
+    
+    h2o_data =  h2o.H2OFrame(data)
+   
+    train, test = h2o_data.split_frame(ratios=[0.8], seed=42)
     
     # Minimal version so it runs faster
-    tpot = TPOTClassifier(generations=2, population_size=2, verbosity=2, random_state=42)
+    aml = H2OAutoML(max_models=10, seed=42)
+    aml.train(x=x, y=y, training_frame=train)
     
     #tpot = TPOTClassifier(generations=5, population_size=20, verbosity=2, random_state=42)
-    tpot.fit(X_train, y_train)
-    return tpot
+    return aml, test
 
-# Predict the target values
-def predict_target(tpot, X_test):
-    y_pred = tpot.predict(X_test)
-    return y_pred
-
-# Evaluate the model
-def evaluate_model(y_test, y_pred):
-    accuracy = accuracy_score(y_test, y_pred)
-    return accuracy
-
-def get_best_model(tpot):
-    return tpot.fitted_pipeline_
-
-#Look for a file with the same name as the data file but with a .config extension
-#If it exists, load the settings from that file
-def load_results(fileName, X_test):    
-    try:
-        # Load the saved model
-        model_filename = fileName.replace('.csv', '.model')
-        loaded_model = load(model_filename)
-
-        # Use the loaded model for predictions
-        return loaded_model.predict(X_test)
-    except:
-        return None
-
-#def save_model(filename, tpot):
-#    # Save the best model to a file
-#    best_model = get_best_model(tpot)
-    
-    # create a filename based on the original filename but replace the extension with .model
-#    model_filename = filename.replace('.csv', '.model')
-#    dump(best_model, model_filename)
-#    return model_filename
-    
-
-
-def create_save_plot(dataframe, filename, field1_name, field2_name):
-    formatted_field1 = field1_name.replace('_', ' ').title()
-    formatted_field2 = field2_name.replace('_', ' ').title()    
-    dataframe.plot(kind='bar', x=field1_name, y=field2_name, rot=90, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}', grid=True)
-    plt.savefig(filename)
-
-
-def save_plots(filename, model_name, plot_types, plot_folder, dataframe, key_features, y):
-    # I admit this wouldn't work without allowing the user to select the field to use as the index
-    try:
-        
-        #loop through the key features and create a plot for each
-        for feature in key_features:
-                        
-            #skip encoded fields
-            if(feature.find("uuid") != -1):
-                continue
-            
-            for plot_type in plot_types:
-                
-                # Create the plot filename
-                #new_folder = f"{os.path.split(filename)[0]}/{plot_folder}"
-                current_directory = os.getcwd()
-                new_folder = f"{current_directory}/{plot_folder}/{model_name}/plot_type"
-                
-                #Create folder if it doesn't exist
-                os.makedirs(new_folder, exist_ok=True)
-                
-                # Build file name
-                plot_filename = os.path.join(new_folder, os.path.basename(filename))
-                plot_filename = plot_filename.replace('.csv', f"_{feature}_{plot_type}.png")
-                
-                # Create the plot if the file doesn't exist
-                if not os.path.exists(plot_filename):
-                    create_save_plot(dataframe, plot_filename, feature, y) 
-                
-                    #hvplot.save(plot, plot_filename)
-
-    except Exception as error:
-        Exception(f"Error generationg or saving plot(s) Error:{error}")
-
-
-def get_key_features(model, X):
-    # Get the key features
-    try:
-        feature_importances = model.best_pipeline.feature_importances_
-        key_features = X.columns[feature_importances > 0.05]  # Adjust the threshold as needed
-    
-        return key_features
-    except:
-        Exception("Error getting key features")
-    
-
-def save_keyfeatures(key_features, filename):
-    # Save the key features to a file
-    key_features_filename = filename.replace('.csv', '.features')
-    
-    df = pd.DataFrame(key_features)
-    df.to_csv(key_features_filename, index=False, header=False)
-
-    return key_features_filename
-
-def load_keyfeatures(filename):
-    # Load the key features from a file
-    key_features_filename = filename.replace('.csv', '.features')
-    #if the file doesn't exist, return None
-    if not os.path.exists(key_features_filename):
-        return None
-    
-    key_features = pd.read_csv(key_features_filename)
-    
-    fiels_list = []
-    # Add column 0 in each row to a list
-    for i in range(len(key_features)):
-         fiels_list.append(key_features.iloc[i, 0])
-    
-    
-    return fiels_list
 
 def predict_automl(filename, y_field, plot_folder):
     return
 
 # Main function
-def train_automl(filename, plot_folder, y_field):
+def train_automl(filename, plot_folder, y_field, productionfile = None, overwrite = False):
     
     step = 1
     key_features = ''
     model_file = ''
-    model_name = "TPOT"
+    model_name = "AutoML"
+    prod_or_train = "train"
+    test = ''
     
     try:
+        
+        # Initialize H2O
+        h2o.init()
         
         # Load the data
         df = load_data(filename)
@@ -185,32 +58,27 @@ def train_automl(filename, plot_folder, y_field):
         step = 3
         X, y = create_X_y(df, y_field)
     
-        # Split the data
-        step = 4
-        X_train, X_test, y_train, y_test = split_data(X, y)
-    
-        # Get Predictions from saved model or do the work required
-        # so user doesn't have to wait for processing if already done and saved
-        step = 5
-        y_pred = load_results(filename, X_test)
-            
+        # Convert the Pandas DataFrame to an H2O Frame
+        h2o_data = h2o.H2OFrame(df)
+                    
         if(y_pred is None):       
     
-            # Initialize TPOT and let it optimize the ML pipeline
+            # Initialize H20 AutoML and let it optimize the ML pipeline
             step = 6
-            tpot = optimize_pipeline(X_train, y_train)
-    
+            aml, test = optimize_pipeline(h2o_data, X, y)
+            
             # Predict the target values
             step = 7
-            y_pred = predict_target(tpot, X_test)
+            best_model = aml.leader
+            y_pred = best_model.predict(h2o_data)
         
             # Save the model
             step = 8
-            model_file = save_model(filename, tpot)
+            model_file = save_model(filename, best_model)
             
             # Get key features
             step = 10
-            key_features = get_key_features(tpot, X)
+            key_features = get_key_features(aml, X)
                 
             #if key_features is None: then save X.columns as features
             if(key_features is None):
@@ -225,16 +93,18 @@ def train_automl(filename, plot_folder, y_field):
             
         # Evaluate the model
         step = 12
-        accuracy = evaluate_model(y_test, y_pred)
+        predictions_df = y_pred.as_data_frame()
+        actual_values = test[y].as_data_frame()
+        accuracy = accuracy_score(actual_values, predictions_df)
         
         # Create interactive plot and save it to a file
         step = 13
         
         predicted_field = y_field + '_predicted'
-        X_test[predicted_field] = y_pred
+        test[predicted_field] = y_pred
 
         # Create a plot vs. y_field for each of the key features or X columns
-        save_plots(filename,  model_name, ['bar', 'line'], plot_folder, X_test, key_features, predicted_field)
+        save_plots(filename,  model_name, ['bar', 'line'], plot_folder, test, key_features, predicted_field)
     
         step = -1
         return {'error':step, 'accuracy': accuracy, 'key_features':key_features, 'model_file':model_file }
@@ -243,15 +113,4 @@ def train_automl(filename, plot_folder, y_field):
         return {'error':error, 'accuracy': -1, 'key_features':'', 'model_file':'' }
     
 
-    #create interactive bar plot and save it to a file for embedding
-
-
-    # Save data
-    #   duration to run
-    #   accuracy score
-    #   model details
-    #   interactive plot
-
-    #   build a class and populate with the details
-    #   and/or file locations listed above
-    # return f"Accuracy: {accuracy}"
+  

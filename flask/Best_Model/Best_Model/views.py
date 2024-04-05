@@ -10,6 +10,7 @@ from flask import render_template, request, session, send_file, send_from_direct
 from flask.helpers import redirect
 from Best_Model import app
 from Models.tpot import train_tpot, predict_tpot
+from Models.AutoML import train_automl, predict_automl
 from Utilities.utils import get_columns, load_settings, save_settings
 
 @app.route('/')
@@ -155,14 +156,11 @@ def tpot_production_file():
     
 @app.route('/tpot_process', methods=['POST'])
 def tpot_process():
-    """
-    Renders the tpot page.
-    """
+
     #Load results if available but give them the chance to reprocess if they want to.
-    #   Speed
     #   Accuracy
+    #   Important featues
     #   Interactive Plot
-    #   Should save other results to a file for later review as well
     selectedFile = session['train_file']
     
     #retroeve the Y value from the session
@@ -194,7 +192,7 @@ def tpot_process():
     session['MODEL_PAGE'] = 'tpot.html'
     
     #Display the results in the tpot page
-    form_data = {'selectedFile': selectedFile, 'accuracy':accuracy, 'selectedY':y, 'key_features_list':key_features, 'key_features':key_features}
+    form_data = {'selectedFile': selectedFile, 'accuracy': f'{accuracy * 100:.2f}', 'selectedY':y, 'key_features_list':key_features, 'key_features':key_features}
     return render_template('tpot.html', title='TPOT', data=form_data)
 
 @app.route('/confusion_matrix', methods=['POST'])
@@ -266,7 +264,7 @@ def return_to_model_page():
    model_page = session['MODEL_PAGE']
    
    #Display the results in the tpot page
-   form_data = {'selectedFile': selectedFile, 'accuracy':accuracy, 'selectedY':y, 'key_features_list':results['key_features'], 'key_features':results['key_features']}
+   form_data = {'selectedFile': selectedFile, 'accuracy':f'{accuracy * 100:.2f}', 'selectedY':y, 'key_features_list':results['key_features'], 'key_features':results['key_features']}
    return render_template(model_page, title='TPOT', data=form_data)
 
 @app.route('/automl')
@@ -279,6 +277,90 @@ def automl():
         year=datetime.now().year
         #message=f'Accuracy: {accuracy}'
     )
+
+@app.route('/automl_process', methods=['POST'])
+def automl_process():
+
+    #Load results if available but give them the chance to reprocess if they want to.
+    #   Accuracy
+    #   Important featues
+    #   Interactive Plot
+    selectedFile = session['train_file']
+    
+    #retroeve the Y value from the session
+    y = load_settings(selectedFile)
+    if(y == ''):
+         y = session['fieldSelected']
+ 
+    # Evaluate the TPOT model using train and test data
+    results = train_automl(selectedFile, app.config['PLOT_SAVE_FOLDER'], y)
+    
+    # Save the results in the session
+    session["MODEL_RESULTS"] = results
+    
+    # Get the accuracy and key features from the results
+    accuracy = results['accuracy']
+    key_features = results['key_features']
+    
+    # Filter features that contain 'uuid' as they are encoded fields
+    key_features = [feature for feature in key_features if 'uuid' not in feature]
+    
+    # Format key features for display
+    # key_features_formatted = "\n\r".join(key_features)     
+    # <br> doesn't work key_features = "<br>".join(key_features)   
+   
+    error = results['error']
+       
+    # Remember the name of the model before the user 
+    # navigates to the graph page
+    session['MODEL_PAGE'] = 'automl.html'
+    
+    #Display the results in the tpot page
+    form_data = {'selectedFile': selectedFile, 'accuracy': f'{accuracy * 100:.2f}', 'selectedY':y, 'key_features_list':key_features, 'key_features':key_features}
+    return render_template('automl.html', title='AutoML', data=form_data)
+
+@app.route('/automl_select_production_file', methods=['POST'])
+def automl_select_production_file():
+    # Use File Selection page after setting mode to prod
+    render_template('select_file.html', data=session['file_type'])
+    
+@app.route('/automl_confusion_matrix', methods=['POST'])
+def automl_display_confusion_matrix():
+    prod_or_train = 'train'
+        
+    selectedFile = session['train_file']
+        
+    new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}AutoML/"
+    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
+    plot_filename = plot_filename.replace('.csv', f"_{prod_or_train}_confusion_matrix.png")
+
+        
+    # Open html file
+    form_data = {'image_file': plot_filename, 'model_name':'AutoML'}
+    return render_template('graph.html', title='Graph', data=form_data)
+        
+@app.route('/automl_display_graph', methods=['POST'])
+def automl_display_graph():
+    
+    prod_or_train = 'train'    
+   
+    # Find out what type of graph they want
+    plot_type = request.form.get('graph_type', None)
+    
+    # Get the selected field from the form
+    selected_feature = request.form.get('dropdown')
+    
+    # Get the selected file from the session
+    selectedFile = session['train_file']
+    
+    # Build the plot filename
+    new_folder = f"{app.config['PLOT_DISPLAY_FOLDER']}AutoML/"
+    plot_filename = os.path.join(new_folder, os.path.basename(selectedFile))
+    plot_filename = plot_filename.replace('.csv', f"_{selected_feature}_{prod_or_train}_{plot_type}.png")
+
+    # Set data to be returned to the form
+    form_data = {'image_file': plot_filename, 'model_name':'AutoML'}
+    return render_template('graph.html', title='Graph', data=form_data)
 
 @app.route('/model3')
 def model3():
