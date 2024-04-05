@@ -13,7 +13,7 @@ from joblib import dump, load
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-plt.rcParams["figure.figsize"] = (20,10)
+plt.rcParams["figure.figsize"] = (20,15)
 sns.set_style('darkgrid')
 
 
@@ -52,11 +52,11 @@ def evaluate_model(y_test, y_pred):
 
 #Look for a file with the same name as the data file but with a .config extension
 #If it exists, load the settings from that file
-def load_results(fileName, model_name, X_test):    
+def load_results(fileName, prod_or_train, model_name, X_test):    
     try:
         # Load the saved model
         model_filename = fileName.replace('.csv', '')
-        model_filename += f"_{model_name}.model"
+        model_filename += f"_{prod_or_train}_{model_name}.model"
         loaded_model = load(model_filename)
         
         # Use the loaded model for predictions
@@ -65,7 +65,7 @@ def load_results(fileName, model_name, X_test):
         return None
 
 
-def save_model(filename, model_name, best_model):
+def save_model(filename, prod_or_train, model_name, best_model):
     
     # if best_model is None, return None
     if best_model is None:
@@ -73,7 +73,7 @@ def save_model(filename, model_name, best_model):
     
     # create a filename based on the original filename but replace the extension with .model
     model_filename = filename.replace('.csv', '')
-    model_filename += f"_{model_name}.model"
+    model_filename += f"_{prod_or_train}_{model_name}.model"
 
     dump(best_model, model_filename)
 
@@ -83,131 +83,65 @@ def create_confusion_matrix(dataframe, filename, predicted, actual):
     contingency_table = pd.crosstab(dataframe[predicted], dataframe[actual])  
     sns.heatmap(contingency_table, annot=True, cmap="YlGnBu")  
     #plt.annotate = True
-    plt.title('Confusion Matrix')
-
     classes = ['Negative', 'Positive']  # Class labels for binary classification
 
     tick_marks = np.arange(len(classes))
     plt.xticks(tick_marks, classes, rotation=45)
     plt.yticks(tick_marks, classes)
 
-    plt.ylabel('Actual')
-    plt.xlabel('Predicted')
+    plt.ylabel('Actual', fontsize=24)
+    plt.xlabel('Predicted', fontsize=24)
+    plt.title('Confusion Matrix', fontsize=27)
     plt.savefig(filename)
     plt.clf()
     
-""" backup
-def create_confusion_matrix(dataframe, filename, predicted, actual):
-
-    cm = confusion_matrix(dataframe[actual], dataframe[predicted])
-    plt.clf()
-    plt.annotate = True
-    plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-    plt.title('Confusion Matrix')
-    plt.colorbar()
-
-    classes = ['Negative', 'Positive']  # Class labels for binary classification
-
-    tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=45)
-    plt.yticks(tick_marks, classes)
-
-    plt.ylabel('Actual')
-    plt.xlabel('Predicted')
-    plt.savefig(filename)
-    plt.clf()
-"""
 
 def create_save_plot(dataframe, filename, plot_type, field1_name, field2_name):
     formatted_field1 = field1_name.replace('_', ' ').title()
     formatted_field2 = field2_name.replace('_', ' ').title()
+    print(f'Field 1: {field1_name}')
+    print(f'Field 2: {field2_name}')
+    print(f'Plot Type: {plot_type}')
+    print(f'filename: {filename}')
     
     unique_value_count = dataframe[field1_name].unique().size
     if unique_value_count > 10:
+        print(f'Using Binning')
         num_bins = 10
         
         # Convert field1_name column to integer if it's a float
         if dataframe[field1_name].dtype == 'float64':        
             dataframe[field1_name] = dataframe[field1_name].astype(int)
 
-        dataframe['Binned'] = pd.cut(dataframe[field1_name], bins=num_bins)
-        grouped_data = dataframe.groupby('Binned').size()
+        dataframe[field1_name] = pd.cut(dataframe[field1_name], bins=num_bins)
+        grouped_data = dataframe.groupby(field1_name).size()
         
         df = grouped_data.copy()
-        print("Grouped Data")
-        print(grouped_data.head())
-        
-        print("Dataframe")
-        print(dataframe.head())
-        
-        df.groupby([field1_name, field2_name]).size().unstack().plot(kind=plot_type, stacked=True, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}')
-        plt.xticks(rotation=90)   
-        plt.tight_layout = True
+       
+        plot = grouped_data.plot(kind=plot_type, x='Binned', y=field2_name, grid=False)
+        #plt.set_xticks(rotation=90)   
+        plot.set_ylabel(formatted_field2, fontsize=24)
+        plot.set_xlabel(formatted_field1, fontsize=24)
+        plot.set_title(f'{formatted_field1} vs. {formatted_field2}', fontsize=27)
+        # Causes errors sometimes plt.tight_layout()
         plt.savefig(filename)
         plt.clf()
    
     else:   
-        
+        print(f'Binning not used')
         df = dataframe.copy()
-        df.groupby([field1_name, field2_name]).size().unstack().plot(kind=plot_type, stacked=True, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}')
-        plt.xticks(rotation=90)        
-        plt.tight_layout()
+        grouped = df.groupby([field1_name, field2_name]).size().unstack()
+        plot = grouped.plot(kind=plot_type, stacked=False)
+        #plt.set_xticks(rotation=90)
+        #plot.set_xticklabels(grouped.index, fontsize=12)
+        
+        plot.set_ylabel(formatted_field2, fontsize=24)
+        plot.set_xlabel(formatted_field1, fontsize=24)
+        plot.set_title(f'{formatted_field1} vs. {formatted_field2}', fontsize=27)
+        # Causes errors sometimes plt.tight_layout()
         plt.savefig(filename)
         plt.clf()
 
-
-    """
-    df = dataframe.copy()
-    # Bar plot  
-    df.groupby(['churn_predicted', 'churn']).size().unstack().plot(kind='bar', stacked=True)  
-    plt.show()  
-
-    
-def create_save_plot(dataframe, filename, plot_type, field1_name, field2_name):
-    formatted_field1 = field1_name.replace('_', ' ').title()
-    formatted_field2 = field2_name.replace('_', ' ').title()
-    
-    unique_value_count = dataframe[field1_name].unique().size
-    if unique_value_count > 10:
-        num_bins = 10
-        
-        # Convert field1_name column to integer if it's a float
-        if dataframe[field1_name].dtype == 'float64':        
-            dataframe[field1_name] = dataframe[field1_name].astype(int)
-
-        dataframe['Binned'] = pd.cut(dataframe[field1_name], bins=num_bins)
-        grouped_data = dataframe.groupby('Binned').size()
-        ax = grouped_data.plot(kind=plot_type, x='Binned', y=field2_name, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}', grid=False)
-        ax.tick_params(axis='x', rotation=90)
-        plt.tight_layout = True
-        plt.savefig(filename)
-   
-    else:   
-        
-        dataframe.reset_index(drop=True, inplace=True)
-        # print(dataframe.head())
-        # dataframe.to_csv('dataframe.csv')
-        # This code always produces ugly graphs - x labeling is unreadable and looks like many many values for x even if only a couple    
-        # Y Horizontal , X vertical
-        #dataframe.plot(kind=plot_type, x=field2_name, y=field1_name, rot=90, xlabel=formatted_field2, ylabel=formatted_field1, title=f'{formatted_field2} vs. {formatted_field1}', grid=True)
-        # Y vertical, X horizontal
-        ax = dataframe.plot(kind=plot_type, x=field1_name, y=field2_name, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}', grid=False)
-        #ax.tick_params(axis='x', rotation=90)
-        plt.xticks(rotation=90)        
-        plt.tight_layout()
-        plt.savefig(filename)
-    """
-    """ Backup
-    def create_save_plot(dataframe, filename, plot_type, field1_name, field2_name):
-    formatted_field1 = field1_name.replace('_', ' ').title()
-    formatted_field2 = field2_name.replace('_', ' ').title()
-    # Y Horizontal , X vertical
-    #dataframe.plot(kind=plot_type, x=field2_name, y=field1_name, rot=90, xlabel=formatted_field2, ylabel=formatted_field1, title=f'{formatted_field2} vs. {formatted_field1}', grid=True)
-    # Y vertical, X horizontal
-    dataframe.plot(kind=plot_type, x=field1_name, y=field2_name, rot=90, xlabel=formatted_field1, ylabel=formatted_field2, title=f'{formatted_field1} vs. {formatted_field2}', grid=False, plt.tight_layout)
-    plt.tight_layout = True
-    plt.savefig(filename)
-    """
 
 def create_hvplot(dataframe, filename, plot_type, field1_name, field2_name):
     formatted_field1 = field1_name.replace('_', ' ').title()
@@ -216,8 +150,14 @@ def create_hvplot(dataframe, filename, plot_type, field1_name, field2_name):
     hvplot.save(plot, filename)
  
 
-def save_plots(filename, model_name, plot_types, plot_folder, dataframe, key_features, predicted, actual_field, overwrite):
-    # I admit this wouldn't work without allowing the user to select the field to use as the index
+def save_plots(filename, prod_or_train, model_name, plot_types, plot_folder, dataframe, key_features, predicted, actual_field, overwrite):
+    
+    #Define variables here so their values are available when logging any errors
+    plot_type = ''
+    feature = ''
+    plot_filename = ''
+    
+
     try:
         
         #Create Confusion Matrix Plot if actual_field is not None
@@ -231,7 +171,7 @@ def save_plots(filename, model_name, plot_types, plot_folder, dataframe, key_fea
         
             # Build file name for confusion matrix
             cm_filename = os.path.join(new_folder, os.path.basename(filename))
-            cm_filename = cm_filename.replace('.csv', f"_confusion_matrix.png")
+            cm_filename = cm_filename.replace('.csv', f"_{prod_or_train}_confusion_matrix.png")
             cm_filename = os.path.join(new_folder, os.path.basename(cm_filename))
             if not os.path.exists(cm_filename) or overwrite:
                 create_confusion_matrix(dataframe, cm_filename, predicted, actual_field)
@@ -245,25 +185,28 @@ def save_plots(filename, model_name, plot_types, plot_folder, dataframe, key_fea
             
             for plot_type in plot_types:
                 
-                # Build the destination folder
-                current_directory = os.getcwd()
-                new_folder = f"{current_directory}/{plot_folder}/{model_name}"
+                try:
+                    # Build the destination folder
+                    current_directory = os.getcwd()
+                    new_folder = f"{current_directory}/{plot_folder}/{model_name}"
                 
-                #Ensure destination folder exists (probably created above)
-                os.makedirs(new_folder, exist_ok=True)
+                    #Ensure destination folder exists (probably created above)
+                    os.makedirs(new_folder, exist_ok=True)
                 
-                # Build file name
-                plot_filename = os.path.join(new_folder, os.path.basename(filename))
-                plot_filename = plot_filename.replace('.csv', f"_{feature}_{plot_type}.png")
-                #plot_filename = plot_filename.replace('.csv', f"_{feature}_{plot_type}.html")
+                    # Build file name
+                    plot_filename = os.path.join(new_folder, os.path.basename(filename))
+                    plot_filename = plot_filename.replace('.csv', f"_{feature}_{prod_or_train}_{plot_type}.png")
+                    #If using HVPLOT need to save as html plot_filename = plot_filename.replace('.csv', f"_{feature}_{prod_or_train}_{plot_type}.html")
                 
 
-                # Create the plot if the file doesn't exist
-                if not os.path.exists(plot_filename) or overwrite:
-                    create_save_plot(dataframe, plot_filename, plot_type, feature, predicted) 
+                    # Create the plot if the file doesn't exist
+                    if not os.path.exists(plot_filename) or overwrite:
+                        create_save_plot(dataframe, plot_filename, plot_type, feature, predicted) 
                 
                     #hvplot.save(plot, plot_filename)
-
+                except Exception as error:
+                    print(f"Error generating or saving plot(s) Error:{error} Plot type:{plot_type} Feature:{feature} Filename: {plot_filename}")
+                    
     except Exception as error:
         Exception(f"Error generationg or saving plot(s) Error:{error}")
 
@@ -279,22 +222,22 @@ def get_key_features(model, X):
         Exception("Error getting key features")
     
 
-def save_keyfeatures(key_features, filename, model_name):
+def save_keyfeatures(key_features, filename, prod_or_train, model_name):
     
     # Save the key features to a file
     key_features_filename = filename.replace('.csv', '')
-    key_features_filename += f"_{model_name}.features"
+    key_features_filename += f"_{prod_or_train}_{model_name}.features"
   
     df = pd.DataFrame(key_features)
     df.to_csv(key_features_filename, index=False, header=False)
 
     return key_features_filename
 
-def load_keyfeatures(filename, model_name):
+def load_keyfeatures(filename, prod_or_train, model_name):
     
     # Load the key features from a file
     key_features_filename = filename.replace('.csv', '')
-    key_features_filename += f"_{model_name}.features"
+    key_features_filename += f"_{prod_or_train}_{model_name}.features"
 
     #if the file doesn't exist, return None
     if not os.path.exists(key_features_filename):

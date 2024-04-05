@@ -3,22 +3,30 @@
 {% block content %}
 
 <div class="jumbotron">
-    <h1>Project 2 - Models</h1>
-    <p class="lead">In this project we will evaluate multiple models to determine which one is the best for evaluating multiple data sets.</p>
-    <p>The followin models/tools will be evaluated:</p>
-    <p><h4><br />TPOT<br />H20 AutoML<br />model 3</h4></p>
+    <p style="font-size: 33px">Project 2 - Multiple Machine Learing Tools</p>
+    <p style="font-size: 16px">We have created two AI Machine learning tools.  </p>
+    <p style="font-size: 16px">This tool is designed for non-technical people.  To use this tool, simply select a file, choose the column you wish to predict and choose a model to use. Results and graph options are available after analysis.</p>
+    <p style="font-size: 16px">Our second tool 'Pipey' is designed for advanced users.  This tool provides many options for preprocessing the file prior to analysis. Resulsts and graphs are also displayed after alalysis</p>
+
+
+
 
 
     {% if data %}
-        <h3>You selected</h3>
-        <p>Selected File: {{ data.selectedFile }}</p>
-        <p>Column to predict: ''{{data.fieldSelected}}''</p>
+    <p>Selected training File: {{ data.selectedFile }}</p>
+    <p>Column to predict: '{{data.fieldSelected}}'</p>
 
-        <p>Click below to select a different file or select a processing model below.</p>    
-        <a class="btn btn-default" href="{{ url_for('select_file')}}">Select a different file &raquo;</a>
+    <p style="font-size: 18px">Click below to select a different training file or select a processing model below.</p>
+    <a class="btn btn-default" href="{{ url_for('select_file')}}">Select a different file &raquo;</a>
     {% else %}
-        <h3>Select a file to analyze</h3>
-        <a class="btn btn-default" href="{{ url_for('select_file')}}">Click to select your file &raquo;</a>
+    <p style="font-size: 18px">The followin models/tools are available:</p>
+    <ul>
+        <li style="font-size: 16px">TPOT - Tree-based Pipeline Optimization Tool</li>
+        <li style="font-size: 16px">H20 AutoML - Automated machine learning framework.</li>
+        <li style="font-size: 16px">Pipey - Our Advanced ML tool</li>
+    </ul>
+    <p style="font-size: 18px">Select a training file to begin</p>
+    <a class="btn btn-default" href="{{ url_for('select_file')}}">Select training file &raquo;</a>
     {% endif %}
 </div>
 
@@ -36,9 +44,9 @@
         <p><a class="btn btn-default" href="{{ url_for('automl') }}">H20 AutoML &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Model 3</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="{{ url_for('model3') }}">Learn more &raquo;</a></p>
+        <h2>Pipey</h2>
+        <p>This is our Machine Learning tool for advanced users.</p>
+        <p><a class="btn btn-default" href="{{ url_for('model3') }}">Pipey &raquo;</a></p>
     </div>
 </div>
 

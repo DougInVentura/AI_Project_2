@@ -3,56 +3,48 @@
   "WorkspaceRootPath": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\model.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\model.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\tpot.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\tpot.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\tpot.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\tpot.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\views.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\views.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\tpot.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\tpot.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\model.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\model.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\about.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\AutoML.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Utilities\\utils.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Utilities\\utils.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\graph.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\runserver.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Ideas or Next Steps.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Ideas or Next Steps.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Models\\AutoML.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\select_file.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EC3389F9-5834-4310-BA2F-4AB93EFCBEE7}|Best Model.pyproj|solutionrelative:Best_Model\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,44 +66,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "about.html",
-              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\about.html",
-              "RelativeDocumentMoniker": "Best_Model\\templates\\about.html",
-              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\about.html",
-              "RelativeToolTip": "Best_Model\\templates\\about.html",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-04-03T18:09:21.865Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AutoML.py",
-              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py",
-              "RelativeDocumentMoniker": "Models\\AutoML.py",
-              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py",
-              "RelativeToolTip": "Models\\AutoML.py",
-              "ViewState": "AQIAADsAAAAAAAAAAAAAAFIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-04-02T16:45:07.393Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "model.py",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\model.py",
               "RelativeDocumentMoniker": "Models\\model.py",
               "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\model.py",
               "RelativeToolTip": "Models\\model.py",
-              "ViewState": "AQIAAEcAAAAAAAAAAAAlwFIAAAAAAAAA",
+              "ViewState": "AQIAAKgAAAAAAAAAAAAAAD0AAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-04-02T15:11:31.8Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "graph.html",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\graph.html",
               "RelativeDocumentMoniker": "Best_Model\\templates\\graph.html",
@@ -123,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "runserver.py",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\runserver.py",
               "RelativeDocumentMoniker": "Best_Model\\runserver.py",
@@ -135,19 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "utils.py",
-              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Utilities\\utils.py",
-              "RelativeDocumentMoniker": "Utilities\\utils.py",
-              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Utilities\\utils.py",
-              "RelativeToolTip": "Utilities\\utils.py",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAAHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-03-31T03:09:45.141Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Ideas or Next Steps.txt",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Ideas or Next Steps.txt",
               "RelativeDocumentMoniker": "Ideas or Next Steps.txt",
@@ -171,15 +127,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "select_file.html",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\select_file.html",
               "RelativeDocumentMoniker": "Best_Model\\templates\\select_file.html",
               "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\select_file.html",
               "RelativeToolTip": "Best_Model\\templates\\select_file.html",
-              "ViewState": "AQIAABsAAAAAAAAAAIBJwCsAAAAQAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAACEAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-29T00:46:25.279Z"
+              "WhenOpened": "2024-03-29T00:46:25.279Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -189,46 +146,60 @@
               "RelativeDocumentMoniker": "Best_Model\\views.py",
               "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\views.py",
               "RelativeToolTip": "Best_Model\\views.py",
-              "ViewState": "AQIAAG4AAAAAAAAAAAAewI0AAAALAAAA",
+              "ViewState": "AQIAAFoAAAAAAAAAAAAiwG8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-03-28T21:30:23.793Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "tpot.py",
-              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\tpot.py",
-              "RelativeDocumentMoniker": "Models\\tpot.py",
-              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\tpot.py",
-              "RelativeToolTip": "Models\\tpot.py",
-              "ViewState": "AQIAAFQAAAAAAAAAAAAQwGQAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-03-28T21:27:50.492Z",
+              "WhenOpened": "2024-03-28T21:30:23.793Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
+              "Title": "AutoML.py",
+              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py",
+              "RelativeDocumentMoniker": "Models\\AutoML.py",
+              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Models\\AutoML.py",
+              "RelativeToolTip": "Models\\AutoML.py",
+              "ViewState": "AQIAAJUAAAAAAAAAAAAAALcAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-04-02T16:45:07.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "about.html",
+              "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\about.html",
+              "RelativeDocumentMoniker": "Best_Model\\templates\\about.html",
+              "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\about.html",
+              "RelativeToolTip": "Best_Model\\templates\\about.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-04-03T18:09:21.865Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "tpot.html",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\tpot.html",
               "RelativeDocumentMoniker": "Best_Model\\templates\\tpot.html",
               "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\tpot.html",
               "RelativeToolTip": "Best_Model\\templates\\tpot.html",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAADUAAAA1AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-04-03T18:41:17.091Z"
+              "WhenOpened": "2024-04-03T18:41:17.091Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "index.html",
               "DocumentMoniker": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\index.html",
               "RelativeDocumentMoniker": "Best_Model\\templates\\index.html",
               "ToolTip": "D:\\ASU\\homework\\AI_Project_2\\AI_Project_2\\flask\\Best_Model\\Best_Model\\templates\\index.html",
               "RelativeToolTip": "Best_Model\\templates\\index.html",
-              "ViewState": "AQIAABMAAAAAAAAAAABBwB8AAAAKAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-03-29T00:42:54.358Z"
+              "WhenOpened": "2024-03-29T00:42:54.358Z",
+              "EditorCaption": ""
             }
           ]
         }

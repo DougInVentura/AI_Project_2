@@ -23,17 +23,108 @@ def optimize_pipeline(X_train, y_train):
     tpot.fit(X_train, y_train)
     return tpot
 
+def predict_tpot(train_file_name, production_file_name, productionfile, model_name, y_field, overwrite = False):
+    step = 1
+    key_features = ''
+    model_file = ''
+    model_name = "TPOT"
+    prod_or_train = "prod"
+
+    try:
+        
+        # Load the train data
+        df_train = load_data(production_file_name)
+        
+        # Load the production data
+        df_prod = load_data(productionfile)
+    
+        # Clean the train data
+        step = 2
+        df = clean_data(df)
+        
+        # Clean the production data
+        step = 3
+        df_prod = clean_data(df_prod)
+    
+        # Create X and y
+        step = 3
+        X, y = create_X_y(df, y_field)
+        
+        # Create train X and y
+        step = 3
+        X_prod, y_prod = create_X_y(df_prod, y_field)
+    
+        # Use entire train dataset for training
+        X_train = df_train.drop(columns=[y_field])
+        y_train = df_train[y_field]
+        
+        # Production dataset becomes test dataset
+        X_test = df_prod.drop(columns=[y_field])
+        y_test = df_prod[y_field]        
+
+        # Initialize TPOT and let it optimize the ML pipeline
+        step = 6
+        tpot = optimize_pipeline(X_train, y_train)
+    
+        # Predict the target values
+        step = 7
+        y_pred = predict_target(tpot, X_test)
+        
+        # Save the model
+        step = 8
+        save_model(production_file_name, prod_or_train, model_name, tpot.fitted_pipeline_)
+            
+        # Get key features
+        step = 10
+        key_features = get_key_features(tpot, X)
+                
+        #if key_features is None: then save X.columns as features
+        if(key_features is None):
+            key_features = X_prod.columns.tolist()
+                
+            save_keyfeatures(key_features, production_file_name,  prod_or_train, model_name)  
+            
+        else:
+            # Load key features
+            step = 11
+            key_features = load_keyfeatures(production_file_name,  prod_or_train, model_name)
+            
+        # Evaluate the model - can't measure accuracy against production data
+              
+       
+        step = 13
+        
+        # Add the predicted and Y values to the dataframe
+        dataframe = pd.DataFrame(X_test)
+        predicted_field = y_field + '_predicted'
+        dataframe[predicted_field] = y_pred
+        dataframe[y_field] = y_test   
+      
+        #Set overwrite to true while working to improve graphs
+        #overwrite = True
+        
+        # Create a plot vs. y_field for each of the key features or X columns
+        save_plots(production_file_name, prod_or_train, model_name, ['bar', 'line'], plot_folder, dataframe, key_features, predicted_field, y_field, overwrite)
+    
+        step = -1
+        return {'error':step, 'accuracy': 0, 'key_features':key_features, 'model_file':model_file }
+    except Exception as error:
+        error += f" at step {step}"
+        return {'error':error, 'accuracy': -1, 'key_features':'', 'model_file':'' }
+
+
 # Main function
 # Filename - data flie to be used
 # Root folder for where plots will be saved
 # y_field - the field to predict
 # overwrite - if true, will overwrite existing plots (Used to force creation of new plots when the user has uploaded a newer version of the data file)
-def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwrite = False):
+def train_tpot(filename, plot_folder, y_field, productionfile = None, overwrite = False):
     
     step = 1
     key_features = ''
     model_file = ''
     model_name = "TPOT"
+    prod_or_train = "train"
     
     try:
         
@@ -55,7 +146,7 @@ def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwri
         # Get Predictions from saved model or do the work required
         # so user doesn't have to wait for processing if already done and saved
         step = 5
-        y_pred = load_results(filename, model_name, X_test)
+        y_pred = load_results(filename, prod_or_train, model_name, X_test)
             
         if(y_pred is None):       
     
@@ -69,7 +160,7 @@ def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwri
         
             # Save the model
             step = 8
-            save_model(filename, model_name, tpot.fitted_pipeline_)
+            save_model(filename, prod_or_train, model_name, tpot.fitted_pipeline_)
             
             # Get key features
             step = 10
@@ -79,12 +170,12 @@ def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwri
             if(key_features is None):
                 key_features = X.columns.tolist()
                 
-            save_keyfeatures(key_features, filename, model_name)  
+            save_keyfeatures(key_features, filename, prod_or_train, model_name)  
             
         else:
             # Load key features
             step = 11
-            key_features = load_keyfeatures(filename, model_name)
+            key_features = load_keyfeatures(filename, prod_or_train, model_name)
             
         # Evaluate the model
         step = 12
@@ -100,10 +191,10 @@ def evaluate_tpot(filename, plot_folder, y_field, productionfile = None, overwri
         dataframe[y_field] = y_test   
       
         #Set overwrite to true while working to improve graphs
-        overwrite = True
+        #overwrite = True
         
         # Create a plot vs. y_field for each of the key features or X columns
-        save_plots(filename,  model_name, ['bar', 'line'], plot_folder, dataframe, key_features, predicted_field, y_field, overwrite)
+        save_plots(filename, prod_or_train, model_name, ['bar', 'line'], plot_folder, dataframe, key_features, predicted_field, y_field, overwrite)
     
         step = -1
         return {'error':step, 'accuracy': accuracy, 'key_features':key_features, 'model_file':model_file }
