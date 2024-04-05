@@ -14,12 +14,12 @@
 <body>
     <div class="jumbotron">
         <h2>Please upload or select a file to analyze</h2>
-        <p style="font-size: 20px""> Using the controls below please upload or select a file and tell us the field that you would like the system to try to predit.</p>
+        <p style="font-size: 20px"> Using the controls below please upload or select a file and tell us the field that you would like the system to try to predit.</p>
 
         {% if data %}
-            <p  style="font-size: 18px">Selected Training File: {{ data.file }}</p>
+            <p style="font-size: 18px">1. Selected Training File: {{ data.file }}</p>
         {% else %}
-            <h2>1. Select Training file</h2>
+            <p style="font-size: 18px">1. Select Training file</p>
             <form method="POST" action="/file_chosen" enctype="multipart/form-data">
                 <input type="file" id="fileInput" name="file" accept=".csv" size="200" width="200">
                     <p class="lead">Confirm file selection and upload for processing</p>
@@ -31,7 +31,7 @@
          that they want to predict -->
             <form action="/field_selected" method="POST">
                 {% if data %}
-                <h2>Please select the field you would like to predict'</h2>
+                <h2>2. Please select the field you would like to predict'</h2>
                 <select name="dropdown">
                     {% for option in data.fields %}
                         {% if option == data.selectedY %}

@@ -14,23 +14,78 @@
         5. Model Interpretability - Provides feature importance analysis.
     </p>
     <br /><p>In the sections below we will illustrate the effectiveness of this tool. </p>
+
+    <form method="POST" action="/automl_process" enctype="multipart/form-data">
+        {% if data %}
+        {% else %}
+        <p style="font-size: 16px">This may take a while..</p>
+        <input class="btn btn-default" type="submit" value="Begin Model Training">
+        {% endif %}
+
+    </form>
+    <form method="POST" action="/automl_select_production_file" enctype="multipart/form-data">
+        {% if data %}
+        <p style="font-size: 16px">Now that the Model is trained please select a file to predict and the program will update the results after analyzing your production data.</p>
+        <input class="btn btn-default" type="submit" value="Select Production file">
+        {% else %}
+        <p></p>
+        {% endif %}
+    </form>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Speed</h2>
-        <p>
-            It took X seconds to evaluate the dataset provided.
-            (Improve this) - slow because it's doing a lot of work to find the best model.
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>Accuracy</h2>
-        <p>The best accuracy TPOT was able to achieve was X.</p>
-    </div>
-    <div class="col-md-4">
-        <h2>Graph</h2>
-        <p>Show graph</p>
-    </div>
+div class="row">
+<div class="col-md-4">
+    <h2>Accuracy</h2>
+    {% if data  %}
+    <p>TPOT was able to predict churn with an accuracy value of: {{ data.accuracy }}%</p>
+    {% else %}
+    <p>The accuracy will be displayed once processing is complete.</p>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    <h2>Important Factors</h2>
+    {% if data %}
+
+    <p>
+        These fields or factors were determined to have the highest impact on churn:<br>
+        <ul>
+            {% for feature in data.key_features_list %}
+            <li>{{ feature }}</li>
+            {% endfor %}
+        </ul>
+    </p>
+    {% else %}
+    <p>Important factors will be displayed once processing is complete.</p>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    <h2>Visual Represtations </h2>
+    <p>Below are visual representations of the data:</p>
+    <form method="POST" action="/automl_confusion_matrix" enctype="multipart/form-data">
+        {% if data %}
+        <input class="btn btn-default" type="submit" value="Show Confusion Matrix">
+        {% else %}
+        <p></p>
+        {% endif %}
+    </form>
+
+    <form method="POST" action="/automl_display_graph" enctype="multipart/form-data">
+        {% if data %}
+        <h3>Please select the field to see how it impacted {{ data.selectedY }}'</h3>
+        <input type="radio" name="graph_type" value="bar" checked> Bar Graph<br>
+        <input type="radio" name="graph_type" value="line"> Line Graph<br>
+        <select name="dropdown">
+            {% for option in data.key_features %}
+            <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input class="btn btn-default" type="submit" value="Show Graph">
+        {% else %}
+        <p></p>
+        {% endif %}
+    </form>
+    <p></p>
+</div>
 </div>
 {% endblock %}
